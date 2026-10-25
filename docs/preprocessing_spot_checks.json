@@ -1,0 +1,74 @@
+{
+  "checks": [
+    {
+      "sample_id": "balanced/Bathroom/camera_00",
+      "raw_rgb_shape": [
+        3008,
+        4112,
+        3
+      ],
+      "rgb_exact_match": true,
+      "material_exact_match": true,
+      "raw_material_ids": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "raw_disparity_dtype": "float32"
+    },
+    {
+      "sample_id": "unbalanced/Bathroom/camera_00",
+      "raw_rgb_shape": [
+        3008,
+        4112,
+        3
+      ],
+      "rgb_exact_match": true,
+      "material_exact_match": true,
+      "raw_material_ids": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "raw_disparity_dtype": "float64"
+    },
+    {
+      "sample_id": "balanced/Mirror/camera_00",
+      "raw_rgb_shape": [
+        3008,
+        4112,
+        3
+      ],
+      "rgb_exact_match": true,
+      "material_exact_match": true,
+      "raw_material_ids": [
+        0,
+        1,
+        3
+      ],
+      "raw_disparity_dtype": "float32"
+    },
+    {
+      "sample_id": "unbalanced/Bottle/camera_00",
+      "raw_rgb_shape": [
+        3008,
+        4112,
+        3
+      ],
+      "rgb_exact_match": true,
+      "material_exact_match": true,
+      "raw_material_ids": [
+        0,
+        1,
+        3
+      ],
+      "raw_disparity_dtype": "float64"
+    }
+  ],
+  "notes": [
+    "Read-only checks; no depth recalculated or files written under data roots",
+    "RGB area resize/crop and material nearest resize/crop reproduced for four samples"
+  ]
+}

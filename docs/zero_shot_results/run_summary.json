@@ -1,0 +1,11 @@
+{
+  "selected": 76,
+  "succeeded": 76,
+  "failed": 0,
+  "total_timed_inference_seconds": 9.979325499967672,
+  "peak_cuda_allocated_bytes": 858825728,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "timing_definition": "synchronized official preprocessing + forward + output processing; excludes model download/load, output IO, evaluation",
+  "split": "train",
+  "not_held_out_test": true
+}

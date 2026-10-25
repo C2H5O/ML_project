@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+vendor/
+data/
+checkpoints/
+*.safetensors
+*.pth
+*.pt
+results/**
+!results/zero_shot/
+!results/zero_shot/.gitkeep
+logs/
+.test-tmp*/
+*.egg-info/

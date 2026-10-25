@@ -1,0 +1,116 @@
+{
+  "mode": "scale_aligned",
+  "aggregation": "global_pixel_weighted",
+  "alignment": "evaluation-time GT median(gt_valid)/median(pred_valid), one scale per image shared across regions",
+  "validity": "all",
+  "selected": 76,
+  "evaluated": 76,
+  "failed": 0,
+  "completeness": "complete",
+  "region_definition": {
+    "target_classes_2_3": [
+      2,
+      3
+    ],
+    "ordinary_class_0": [
+      0
+    ],
+    "other_classes_0_1": [
+      0,
+      1
+    ]
+  },
+  "run_metadata": {
+    "model_id": "depth-anything/DA3-BASE",
+    "architecture": "da3-base",
+    "checkpoint_kind": "huggingface",
+    "checkpoint_hashes": null,
+    "hf_revision": "f4a6c9b3c95e41c82048423d3493a81ec3fa810e",
+    "da3_code_commit": "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4",
+    "precision": "bf16",
+    "device": "cuda",
+    "precision_adapter": "instance-local official forward AMP policy only",
+    "torch": "2.3.1",
+    "torch_cuda": "12.1",
+    "runtime_versions": {
+      "numpy": "1.26.4",
+      "pillow": "10.4.0",
+      "huggingface-hub": "0.26.2",
+      "safetensors": "0.4.5"
+    },
+    "depth_semantics": "relative_raw_prediction",
+    "process_res": 560,
+    "process_res_method": "upper_bound_resize",
+    "seed": 42,
+    "split": "train",
+    "single_image": true,
+    "gt_input": false,
+    "infer_gs": false
+  },
+  "regions": {
+    "full_image": {
+      "status": "available",
+      "valid_pixels": 18667168,
+      "samples": 76,
+      "AbsRel": 0.055977306272060254,
+      "RMSE": 0.10874636940000022,
+      "delta1": 0.9622908520456879
+    },
+    "target_classes_2_3": {
+      "status": "available",
+      "valid_pixels": 2831089,
+      "samples": 64,
+      "AbsRel": 0.06254148590699014,
+      "RMSE": 0.15658956278645006,
+      "delta1": 0.9579638789172646
+    },
+    "ordinary_class_0": {
+      "status": "available",
+      "valid_pixels": 10273658,
+      "samples": 76,
+      "AbsRel": 0.05629878059965089,
+      "RMSE": 0.10743341902223184,
+      "delta1": 0.949956286261427
+    },
+    "other_classes_0_1": {
+      "status": "available",
+      "valid_pixels": 15836079,
+      "samples": 76,
+      "AbsRel": 0.054803797554499926,
+      "RMSE": 0.09775640733006505,
+      "delta1": 0.9630644050209651
+    },
+    "material_0": {
+      "status": "available",
+      "valid_pixels": 10273658,
+      "samples": 76,
+      "AbsRel": 0.05629878059965089,
+      "RMSE": 0.10743341902223184,
+      "delta1": 0.949956286261427
+    },
+    "material_1": {
+      "status": "available",
+      "valid_pixels": 5562421,
+      "samples": 70,
+      "AbsRel": 0.052042599773591366,
+      "RMSE": 0.07673926432214788,
+      "delta1": 0.9872747855654939
+    },
+    "material_2": {
+      "status": "available",
+      "valid_pixels": 1193693,
+      "samples": 24,
+      "AbsRel": 0.04340015887666527,
+      "RMSE": 0.05567718487629577,
+      "delta1": 0.9992192297349486
+    },
+    "material_3": {
+      "status": "available",
+      "valid_pixels": 1637396,
+      "samples": 48,
+      "AbsRel": 0.07649587939934609,
+      "RMSE": 0.2003400368228809,
+      "delta1": 0.9278879391423944
+    }
+  }
+}

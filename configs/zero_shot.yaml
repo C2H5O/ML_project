@@ -1,0 +1,14 @@
+# Documented CLI defaults; scripts intentionally take explicit CLI arguments.
+model_id: depth-anything/DA3-BASE
+split: train
+process_res: 560
+process_res_method: upper_bound_resize
+device: auto
+precision: auto
+seed: 42
+evaluation_mode: scale_aligned
+validity: all
+aggregation: global_pixel_weighted
+target_material_ids: [2, 3]
+ordinary_material_ids: [0]
+other_material_ids: [0, 1]

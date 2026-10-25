@@ -1,0 +1,8 @@
+name: da3-booster
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.20
+  - pip=24.3.1
+# After conda env create -f environment.yml, activate and run bash setup_env.sh.
+# Torch is installed explicitly by setup_env.sh, never implicitly via DA3 metadata.

@@ -1,0 +1,19 @@
+# Minimal single-image DA3 runtime after the documented lazy-export patch.
+# Install with constraints.txt so the resolver cannot upgrade torch/torchvision.
+numpy==1.26.4
+Pillow==10.4.0
+opencv-python==4.10.0.84
+matplotlib==3.9.2
+einops==0.8.0
+huggingface-hub==0.26.2
+safetensors==0.4.5
+omegaconf==2.3.0
+addict==2.4.0
+imageio==2.36.0
+tqdm==4.67.1
+evo==1.29.0
+# Keep evo's ROS reader on a Python-3.10 compatible pure-Python release;
+# newer versions pull additional SQLite binary dependencies irrelevant to depth.
+rosbags==0.10.6
+scipy==1.13.1
+pytest==8.3.3

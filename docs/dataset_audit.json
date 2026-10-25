@@ -1,0 +1,2474 @@
+{
+  "schema_version": 1,
+  "splits": {
+    "train": {
+      "index_samples": 76,
+      "readable_samples": 76,
+      "subsets": {
+        "balanced": 38,
+        "unbalanced": 38
+      },
+      "material_pixel_counts": {
+        "1": 5717173,
+        "2": 1201142,
+        "3": 1660969,
+        "0": 10487596
+      },
+      "samples": [
+        {
+          "sample_id": "balanced/Bathroom/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 240548,
+          "valid_ratio": 0.9588169642857143,
+          "zero": 10332,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5492286682128906,
+          "depth_max_m": 1.421836018562317,
+          "material_counts": {
+            "1": 242286,
+            "2": 295,
+            "3": 5832,
+            "0": 2467
+          },
+          "consistency_ratio": 0.8567243303571429,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Bedroom/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247836,
+          "valid_ratio": 0.9878667091836735,
+          "zero": 3044,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7973503470420837,
+          "depth_max_m": 3.285982608795166,
+          "material_counts": {
+            "0": 214648,
+            "3": 35251,
+            "1": 981
+          },
+          "consistency_ratio": 0.9512794961734694,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Bottle/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246119,
+          "valid_ratio": 0.9810227997448979,
+          "zero": 4761,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6544116735458374,
+          "depth_max_m": 2.208329439163208,
+          "material_counts": {
+            "0": 120638,
+            "1": 112899,
+            "3": 17343
+          },
+          "consistency_ratio": 0.9079440369897959,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Bottle1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248825,
+          "valid_ratio": 0.9918088329081632,
+          "zero": 2055,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5074068903923035,
+          "depth_max_m": 1.2637192010879517,
+          "material_counts": {
+            "0": 236238,
+            "2": 14642
+          },
+          "consistency_ratio": 0.8958625637755102,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/BottledWater/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246907,
+          "valid_ratio": 0.984163743622449,
+          "zero": 3973,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5779231786727905,
+          "depth_max_m": 1.3543263673782349,
+          "material_counts": {
+            "0": 118184,
+            "3": 132696
+          },
+          "consistency_ratio": 0.8794164540816326,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Bottles1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248534,
+          "valid_ratio": 0.9906489158163265,
+          "zero": 2346,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6602747440338135,
+          "depth_max_m": 1.180137276649475,
+          "material_counts": {
+            "0": 227473,
+            "1": 411,
+            "3": 22996
+          },
+          "consistency_ratio": 0.8926618303571429,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Bucket/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246692,
+          "valid_ratio": 0.9833067602040816,
+          "zero": 4188,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5835414528846741,
+          "depth_max_m": 1.2505053281784058,
+          "material_counts": {
+            "0": 229648,
+            "3": 21232
+          },
+          "consistency_ratio": 0.8856903698979591,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Canteen/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 245155,
+          "valid_ratio": 0.977180325255102,
+          "zero": 5725,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7432442307472229,
+          "depth_max_m": 1.3197590112686157,
+          "material_counts": {
+            "0": 228108,
+            "1": 9370,
+            "3": 13402
+          },
+          "consistency_ratio": 0.8854153380102041,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Case/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 245397,
+          "valid_ratio": 0.9781449298469388,
+          "zero": 5483,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.9114901423454285,
+          "depth_max_m": 1.7520298957824707,
+          "material_counts": {
+            "0": 229709,
+            "1": 21171
+          },
+          "consistency_ratio": 0.9338767538265306,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/CashBox/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246096,
+          "valid_ratio": 0.9809311224489796,
+          "zero": 4784,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.513014554977417,
+          "depth_max_m": 2.242788791656494,
+          "material_counts": {
+            "0": 214229,
+            "1": 28972,
+            "3": 529,
+            "2": 7150
+          },
+          "consistency_ratio": 0.8821348852040817,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/CoffeeMaker/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246728,
+          "valid_ratio": 0.9834502551020409,
+          "zero": 4152,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6535272002220154,
+          "depth_max_m": 1.384540319442749,
+          "material_counts": {
+            "0": 172254,
+            "1": 38212,
+            "3": 40414
+          },
+          "consistency_ratio": 0.8977439413265306,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Cooker1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 244930,
+          "valid_ratio": 0.9762834821428571,
+          "zero": 5950,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.857571005821228,
+          "depth_max_m": 1.3041318655014038,
+          "material_counts": {
+            "1": 182119,
+            "0": 47049,
+            "3": 21712
+          },
+          "consistency_ratio": 0.9043327487244898,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Cosmetics/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247109,
+          "valid_ratio": 0.9849689094387755,
+          "zero": 3771,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5783950090408325,
+          "depth_max_m": 1.5463862419128418,
+          "material_counts": {
+            "0": 232824,
+            "1": 8096,
+            "3": 9960
+          },
+          "consistency_ratio": 0.8933633609693877,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/DogHouse/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246090,
+          "valid_ratio": 0.9809072066326531,
+          "zero": 4790,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8714602589607239,
+          "depth_max_m": 1.547490119934082,
+          "material_counts": {
+            "0": 243302,
+            "1": 7578
+          },
+          "consistency_ratio": 0.8878706951530613,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Door/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 243036,
+          "valid_ratio": 0.968734056122449,
+          "zero": 7844,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8273976445198059,
+          "depth_max_m": 1.881688117980957,
+          "material_counts": {
+            "0": 98018,
+            "1": 109110,
+            "2": 43752
+          },
+          "consistency_ratio": 0.8834861288265307,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/ExtractorFan/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 240101,
+          "valid_ratio": 0.9570352359693878,
+          "zero": 10779,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8322843313217163,
+          "depth_max_m": 1.4487138986587524,
+          "material_counts": {
+            "0": 163689,
+            "1": 87191
+          },
+          "consistency_ratio": 0.8800223214285714,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Fridge/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 236901,
+          "valid_ratio": 0.9442801339285715,
+          "zero": 13979,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7839568853378296,
+          "depth_max_m": 1.397085189819336,
+          "material_counts": {
+            "3": 67238,
+            "0": 43843,
+            "1": 139799
+          },
+          "consistency_ratio": 0.9049744897959183,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Lunch/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 244221,
+          "valid_ratio": 0.9734574298469387,
+          "zero": 6659,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5730957984924316,
+          "depth_max_m": 2.066519021987915,
+          "material_counts": {
+            "0": 194827,
+            "1": 38960,
+            "3": 17093
+          },
+          "consistency_ratio": 0.8668207908163266,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Microwave/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247474,
+          "valid_ratio": 0.9864237882653061,
+          "zero": 3406,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6990082859992981,
+          "depth_max_m": 1.3425809144973755,
+          "material_counts": {
+            "0": 178328,
+            "1": 27263,
+            "2": 35137,
+            "3": 10152
+          },
+          "consistency_ratio": 0.9097377232142857,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Mirror/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248127,
+          "valid_ratio": 0.9890266262755102,
+          "zero": 2753,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8366947770118713,
+          "depth_max_m": 1.5848828554153442,
+          "material_counts": {
+            "0": 150399,
+            "3": 89321,
+            "1": 11160
+          },
+          "consistency_ratio": 0.9137794961734694,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Moka/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 244916,
+          "valid_ratio": 0.9762276785714286,
+          "zero": 5964,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5750880837440491,
+          "depth_max_m": 1.2262935638427734,
+          "material_counts": {
+            "0": 223583,
+            "1": 17550,
+            "3": 9747
+          },
+          "consistency_ratio": 0.8952208227040817,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Moka1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 240909,
+          "valid_ratio": 0.9602558992346939,
+          "zero": 9971,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.431641161441803,
+          "depth_max_m": 1.022996187210083,
+          "material_counts": {
+            "0": 212015,
+            "1": 22647,
+            "3": 16218
+          },
+          "consistency_ratio": 0.7932995854591837,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Motorcycle/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 243158,
+          "valid_ratio": 0.9692203443877551,
+          "zero": 7722,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 1.939145803451538,
+          "depth_max_m": 4.241902828216553,
+          "material_counts": {
+            "0": 184785,
+            "3": 33794,
+            "1": 32301
+          },
+          "consistency_ratio": 0.9023198341836735,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Mouthwash/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 238413,
+          "valid_ratio": 0.9503069196428572,
+          "zero": 12467,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5995331406593323,
+          "depth_max_m": 1.5234973430633545,
+          "material_counts": {
+            "1": 10760,
+            "0": 131288,
+            "3": 108788,
+            "2": 44
+          },
+          "consistency_ratio": 0.8690888073979591,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/OilCan/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246798,
+          "valid_ratio": 0.9837292729591837,
+          "zero": 4082,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5075104832649231,
+          "depth_max_m": 1.2666692733764648,
+          "material_counts": {
+            "0": 115453,
+            "1": 133052,
+            "2": 2375
+          },
+          "consistency_ratio": 0.8621133609693877,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Oven1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 234269,
+          "valid_ratio": 0.9337890625,
+          "zero": 16611,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5937973856925964,
+          "depth_max_m": 1.2255630493164062,
+          "material_counts": {
+            "0": 63841,
+            "1": 138395,
+            "3": 48644
+          },
+          "consistency_ratio": 0.8640744579081633,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Oven2/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247676,
+          "valid_ratio": 0.9872289540816327,
+          "zero": 3204,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6410797238349915,
+          "depth_max_m": 1.5716391801834106,
+          "material_counts": {
+            "0": 97124,
+            "1": 52912,
+            "2": 100844
+          },
+          "consistency_ratio": 0.8917570153061225,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Pots1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246745,
+          "valid_ratio": 0.9835180165816326,
+          "zero": 4135,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6021894812583923,
+          "depth_max_m": 1.2632390260696411,
+          "material_counts": {
+            "0": 193016,
+            "1": 57864
+          },
+          "consistency_ratio": 0.8726442920918367,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Shower/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248298,
+          "valid_ratio": 0.9897082270408163,
+          "zero": 2582,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8696862459182739,
+          "depth_max_m": 1.4792028665542603,
+          "material_counts": {
+            "1": 248324,
+            "0": 2556
+          },
+          "consistency_ratio": 0.9341996173469388,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Sink/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248584,
+          "valid_ratio": 0.9908482142857142,
+          "zero": 2296,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8362542390823364,
+          "depth_max_m": 1.4234956502914429,
+          "material_counts": {
+            "0": 147464,
+            "1": 103416
+          },
+          "consistency_ratio": 0.9491350446428571,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/SoapDishes/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 231992,
+          "valid_ratio": 0.9247130102040816,
+          "zero": 18888,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6526743173599243,
+          "depth_max_m": 1.1796950101852417,
+          "material_counts": {
+            "1": 148421,
+            "0": 86572,
+            "3": 15887
+          },
+          "consistency_ratio": 0.8622967155612244,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/TV/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250407,
+          "valid_ratio": 0.9981146364795919,
+          "zero": 473,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 1.1364200115203857,
+          "depth_max_m": 1.5719941854476929,
+          "material_counts": {
+            "0": 43655,
+            "1": 2258,
+            "2": 204967
+          },
+          "consistency_ratio": 0.9517338966836735,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/TV1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248567,
+          "valid_ratio": 0.9907804528061225,
+          "zero": 2313,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8714999556541443,
+          "depth_max_m": 1.385742425918579,
+          "material_counts": {
+            "0": 165862,
+            "1": 51900,
+            "2": 33118
+          },
+          "consistency_ratio": 0.9269610969387755,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/TV2/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246243,
+          "valid_ratio": 0.9815170599489796,
+          "zero": 4637,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8457051515579224,
+          "depth_max_m": 2.2433903217315674,
+          "material_counts": {
+            "0": 133038,
+            "1": 601,
+            "2": 117241
+          },
+          "consistency_ratio": 0.9109813456632653,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Tablet/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 241748,
+          "valid_ratio": 0.9636001275510204,
+          "zero": 9132,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.555090606212616,
+          "depth_max_m": 1.2807350158691406,
+          "material_counts": {
+            "1": 109581,
+            "0": 109121,
+            "2": 32178
+          },
+          "consistency_ratio": 0.8978316326530612,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Toilet/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248221,
+          "valid_ratio": 0.9894013073979592,
+          "zero": 2659,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7839194536209106,
+          "depth_max_m": 1.7453982830047607,
+          "material_counts": {
+            "1": 216784,
+            "3": 9682,
+            "0": 24414
+          },
+          "consistency_ratio": 0.9240792410714286,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Vodka/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 222602,
+          "valid_ratio": 0.8872847576530613,
+          "zero": 28278,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7554290890693665,
+          "depth_max_m": 1.6924636363983154,
+          "material_counts": {
+            "1": 158158,
+            "0": 90877,
+            "3": 1845
+          },
+          "consistency_ratio": 0.8644172512755102,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "balanced/Washer/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246346,
+          "valid_ratio": 0.9819276147959184,
+          "zero": 4534,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6578798890113831,
+          "depth_max_m": 1.4627220630645752,
+          "material_counts": {
+            "1": 212978,
+            "0": 807,
+            "3": 37095
+          },
+          "consistency_ratio": 0.888428730867347,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Bathroom/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246441,
+          "valid_ratio": 0.9823062818877552,
+          "zero": 4439,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5398325324058533,
+          "depth_max_m": 1.333554983139038,
+          "material_counts": {
+            "1": 241124,
+            "0": 2641,
+            "2": 328,
+            "3": 6787
+          },
+          "consistency_ratio": 0.9823062818877552,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Bedroom/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247800,
+          "valid_ratio": 0.9877232142857143,
+          "zero": 3080,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7580561637878418,
+          "depth_max_m": 2.75640869140625,
+          "material_counts": {
+            "0": 216032,
+            "3": 34102,
+            "1": 746
+          },
+          "consistency_ratio": 0.9877232142857143,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Bottle/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248537,
+          "valid_ratio": 0.9906608737244897,
+          "zero": 2343,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5833544731140137,
+          "depth_max_m": 2.0979902744293213,
+          "material_counts": {
+            "1": 136029,
+            "0": 97830,
+            "3": 17021
+          },
+          "consistency_ratio": 0.9906608737244897,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Bottle1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248359,
+          "valid_ratio": 0.9899513711734694,
+          "zero": 2521,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.4739908277988434,
+          "depth_max_m": 1.2258555889129639,
+          "material_counts": {
+            "0": 233831,
+            "2": 17049
+          },
+          "consistency_ratio": 0.9899513711734694,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/BottledWater/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246692,
+          "valid_ratio": 0.9833067602040816,
+          "zero": 4188,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5596822500228882,
+          "depth_max_m": 1.1422059535980225,
+          "material_counts": {
+            "0": 94771,
+            "3": 156109
+          },
+          "consistency_ratio": 0.9833067602040816,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Bottles1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248243,
+          "valid_ratio": 0.9894889987244898,
+          "zero": 2637,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6315691471099854,
+          "depth_max_m": 1.142025113105774,
+          "material_counts": {
+            "0": 226174,
+            "1": 414,
+            "3": 24292
+          },
+          "consistency_ratio": 0.9894889987244898,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Bucket/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 249201,
+          "valid_ratio": 0.9933075573979592,
+          "zero": 1679,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5403364300727844,
+          "depth_max_m": 1.2279014587402344,
+          "material_counts": {
+            "0": 225679,
+            "3": 25201
+          },
+          "consistency_ratio": 0.9933075573979592,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Canteen/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 244541,
+          "valid_ratio": 0.9747329400510204,
+          "zero": 6339,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7224332094192505,
+          "depth_max_m": 1.3079845905303955,
+          "material_counts": {
+            "0": 228598,
+            "1": 9365,
+            "3": 12917
+          },
+          "consistency_ratio": 0.9747329400510204,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Case/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 244985,
+          "valid_ratio": 0.9765027104591837,
+          "zero": 5895,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8364665508270264,
+          "depth_max_m": 1.4350131750106812,
+          "material_counts": {
+            "0": 220090,
+            "1": 30790
+          },
+          "consistency_ratio": 0.9765027104591837,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/CashBox/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248342,
+          "valid_ratio": 0.9898836096938776,
+          "zero": 2538,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.4608300030231476,
+          "depth_max_m": 2.1286509037017822,
+          "material_counts": {
+            "0": 206887,
+            "1": 35350,
+            "3": 584,
+            "2": 8059
+          },
+          "consistency_ratio": 0.9898836096938776,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/CoffeeMaker/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 245212,
+          "valid_ratio": 0.977407525510204,
+          "zero": 5668,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6089298129081726,
+          "depth_max_m": 1.168399691581726,
+          "material_counts": {
+            "0": 154991,
+            "1": 46833,
+            "3": 49056
+          },
+          "consistency_ratio": 0.977407525510204,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Cooker1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 245724,
+          "valid_ratio": 0.9794483418367347,
+          "zero": 5156,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.795751690864563,
+          "depth_max_m": 1.2225215435028076,
+          "material_counts": {
+            "1": 185330,
+            "0": 41581,
+            "3": 23969
+          },
+          "consistency_ratio": 0.9794483418367347,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Cosmetics/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250015,
+          "valid_ratio": 0.9965521364795918,
+          "zero": 865,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5139967203140259,
+          "depth_max_m": 1.5354411602020264,
+          "material_counts": {
+            "0": 229367,
+            "1": 9263,
+            "3": 12250
+          },
+          "consistency_ratio": 0.9965521364795918,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/DogHouse/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246838,
+          "valid_ratio": 0.9838887117346938,
+          "zero": 4042,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8157690763473511,
+          "depth_max_m": 1.3888229131698608,
+          "material_counts": {
+            "0": 244285,
+            "1": 6595
+          },
+          "consistency_ratio": 0.9838887117346938,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Door/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 242913,
+          "valid_ratio": 0.9682437818877551,
+          "zero": 7967,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8169056177139282,
+          "depth_max_m": 1.6593074798583984,
+          "material_counts": {
+            "0": 95496,
+            "1": 123839,
+            "2": 31545
+          },
+          "consistency_ratio": 0.9682437818877551,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/ExtractorFan/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 245528,
+          "valid_ratio": 0.9786670918367347,
+          "zero": 5352,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7451634407043457,
+          "depth_max_m": 1.3757895231246948,
+          "material_counts": {
+            "0": 156982,
+            "1": 93898
+          },
+          "consistency_ratio": 0.9786670918367347,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Fridge/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247246,
+          "valid_ratio": 0.9855149872448979,
+          "zero": 3634,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6604745984077454,
+          "depth_max_m": 1.2514739036560059,
+          "material_counts": {
+            "3": 70801,
+            "0": 51642,
+            "1": 128437
+          },
+          "consistency_ratio": 0.9855149872448979,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Lunch/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247291,
+          "valid_ratio": 0.985694355867347,
+          "zero": 3589,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5116237998008728,
+          "depth_max_m": 1.9613714218139648,
+          "material_counts": {
+            "0": 188872,
+            "3": 20074,
+            "1": 41934
+          },
+          "consistency_ratio": 0.985694355867347,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Microwave/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248024,
+          "valid_ratio": 0.9886160714285714,
+          "zero": 2856,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6382067799568176,
+          "depth_max_m": 1.326533317565918,
+          "material_counts": {
+            "0": 177814,
+            "1": 28877,
+            "2": 30483,
+            "3": 13706
+          },
+          "consistency_ratio": 0.9886160714285714,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Mirror/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 249428,
+          "valid_ratio": 0.9942123724489796,
+          "zero": 1452,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7414050102233887,
+          "depth_max_m": 1.4974901676177979,
+          "material_counts": {
+            "0": 137409,
+            "3": 100067,
+            "1": 13404
+          },
+          "consistency_ratio": 0.9942123724489796,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Moka/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246064,
+          "valid_ratio": 0.9808035714285714,
+          "zero": 4816,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5521829724311829,
+          "depth_max_m": 1.041890025138855,
+          "material_counts": {
+            "0": 217963,
+            "1": 21957,
+            "3": 10960
+          },
+          "consistency_ratio": 0.9808035714285714,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Moka1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 240563,
+          "valid_ratio": 0.9588767538265306,
+          "zero": 10317,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.41043028235435486,
+          "depth_max_m": 1.0234755277633667,
+          "material_counts": {
+            "0": 210699,
+            "1": 22958,
+            "3": 17223
+          },
+          "consistency_ratio": 0.9588767538265306,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Motorcycle/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 244827,
+          "valid_ratio": 0.9758729272959183,
+          "zero": 6053,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 1.8197503089904785,
+          "depth_max_m": 3.925163507461548,
+          "material_counts": {
+            "0": 176998,
+            "3": 36150,
+            "1": 37732
+          },
+          "consistency_ratio": 0.9758729272959183,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Mouthwash/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250419,
+          "valid_ratio": 0.9981624681122448,
+          "zero": 461,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5173126459121704,
+          "depth_max_m": 1.4198945760726929,
+          "material_counts": {
+            "0": 136697,
+            "3": 112597,
+            "1": 1540,
+            "2": 46
+          },
+          "consistency_ratio": 0.9981624681122448,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/OilCan/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246911,
+          "valid_ratio": 0.9841796875,
+          "zero": 3969,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.4766365885734558,
+          "depth_max_m": 1.2270194292068481,
+          "material_counts": {
+            "0": 106671,
+            "1": 141784,
+            "2": 2425
+          },
+          "consistency_ratio": 0.9841796875,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Oven1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 239241,
+          "valid_ratio": 0.9536073022959184,
+          "zero": 11639,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5187217593193054,
+          "depth_max_m": 1.228095293045044,
+          "material_counts": {
+            "0": 44492,
+            "1": 154889,
+            "3": 51499
+          },
+          "consistency_ratio": 0.9536073022959184,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Oven2/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247363,
+          "valid_ratio": 0.9859813456632653,
+          "zero": 3517,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5685920119285583,
+          "depth_max_m": 1.4933725595474243,
+          "material_counts": {
+            "0": 80981,
+            "1": 57793,
+            "2": 112106
+          },
+          "consistency_ratio": 0.9859813456632653,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Pots1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246286,
+          "valid_ratio": 0.981688456632653,
+          "zero": 4594,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5550671815872192,
+          "depth_max_m": 1.2256863117218018,
+          "material_counts": {
+            "0": 185059,
+            "1": 65821
+          },
+          "consistency_ratio": 0.981688456632653,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Shower/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 249657,
+          "valid_ratio": 0.9951251594387756,
+          "zero": 1223,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.898737370967865,
+          "depth_max_m": 1.3469791412353516,
+          "material_counts": {
+            "1": 250202,
+            "0": 678
+          },
+          "consistency_ratio": 0.9951251594387756,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Sink/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250618,
+          "valid_ratio": 0.9989556760204081,
+          "zero": 262,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7329502701759338,
+          "depth_max_m": 1.386128306388855,
+          "material_counts": {
+            "0": 135769,
+            "1": 115111
+          },
+          "consistency_ratio": 0.9989556760204081,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/SoapDishes/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 247182,
+          "valid_ratio": 0.9852598852040816,
+          "zero": 3698,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5934886336326599,
+          "depth_max_m": 1.0769871473312378,
+          "material_counts": {
+            "1": 156780,
+            "0": 70387,
+            "3": 23713
+          },
+          "consistency_ratio": 0.9852598852040816,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/TV/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250521,
+          "valid_ratio": 0.9985690369897959,
+          "zero": 359,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.9576133489608765,
+          "depth_max_m": 1.5215585231781006,
+          "material_counts": {
+            "0": 36703,
+            "1": 1194,
+            "2": 212983
+          },
+          "consistency_ratio": 0.9985690369897959,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/TV1/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 248567,
+          "valid_ratio": 0.9907804528061225,
+          "zero": 2313,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8485420942306519,
+          "depth_max_m": 1.3384093046188354,
+          "material_counts": {
+            "0": 151670,
+            "1": 58782,
+            "2": 40428
+          },
+          "consistency_ratio": 0.9907804528061225,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/TV2/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246550,
+          "valid_ratio": 0.9827407525510204,
+          "zero": 4330,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.8490300178527832,
+          "depth_max_m": 2.154649257659912,
+          "material_counts": {
+            "0": 122847,
+            "1": 690,
+            "2": 127343
+          },
+          "consistency_ratio": 0.9827407525510204,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Tablet/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 246569,
+          "valid_ratio": 0.9828164859693878,
+          "zero": 4311,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.517525315284729,
+          "depth_max_m": 1.1801952123641968,
+          "material_counts": {
+            "1": 110475,
+            "0": 113801,
+            "2": 26604
+          },
+          "consistency_ratio": 0.9828164859693878,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Toilet/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250097,
+          "valid_ratio": 0.9968789859693877,
+          "zero": 783,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.7259857058525085,
+          "depth_max_m": 1.6475352048873901,
+          "material_counts": {
+            "1": 220365,
+            "0": 18937,
+            "3": 11578
+          },
+          "consistency_ratio": 0.9968789859693877,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Vodka/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 241486,
+          "valid_ratio": 0.9625558035714286,
+          "zero": 9394,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.6059199571609497,
+          "depth_max_m": 1.4789608716964722,
+          "material_counts": {
+            "1": 174138,
+            "0": 74066,
+            "3": 2676
+          },
+          "consistency_ratio": 0.9625558035714286,
+          "intrinsics_transform_passed": true
+        },
+        {
+          "sample_id": "unbalanced/Washer/camera_00",
+          "shape": [
+            448,
+            560
+          ],
+          "dtype": "float32",
+          "original_size": [
+            3008,
+            4112
+          ],
+          "depth_unit": "m",
+          "valid_pixels": 250169,
+          "valid_ratio": 0.9971659757653061,
+          "zero": 711,
+          "negative": 0,
+          "nan": 0,
+          "inf": 0,
+          "depth_min_m": 0.5572027564048767,
+          "depth_max_m": 1.4127556085586548,
+          "material_counts": {
+            "1": 209254,
+            "0": 860,
+            "3": 40766
+          },
+          "consistency_ratio": 0.9971659757653061,
+          "intrinsics_transform_passed": true
+        }
+      ]
+    }
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "sample_id": "balanced/Bathroom/camera_00",
+      "warning": "mtxL.fx=4742.330 \u4e0e proj_matL.fx=4848.316 \u76f8\u5dee 2.2%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Bottle/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/DogHouse/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Fridge/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Lunch/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Mirror/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Shower/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Sink/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/TV/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Tablet/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "balanced/Washer/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=4848.326 \u76f8\u5dee 2.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Bathroom/camera_00",
+      "warning": "mtxL.fx=4742.330 \u4e0e proj_matL.fx=5127.864 \u76f8\u5dee 8.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Bedroom/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Bottle/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Bottle1/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/BottledWater/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Bottles1/camera_00",
+      "warning": "mtxL.fx=4743.069 \u4e0e proj_matL.fx=4900.477 \u76f8\u5dee 3.3%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Bucket/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Canteen/camera_00",
+      "warning": "mtxL.fx=4743.069 \u4e0e proj_matL.fx=4900.477 \u76f8\u5dee 3.3%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Case/camera_00",
+      "warning": "mtxL.fx=4754.199 \u4e0e proj_matL.fx=5182.240 \u76f8\u5dee 9.0%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/CashBox/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/CoffeeMaker/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Cooker1/camera_00",
+      "warning": "mtxL.fx=4739.102 \u4e0e proj_matL.fx=5128.121 \u76f8\u5dee 8.2%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Cosmetics/camera_00",
+      "warning": "mtxL.fx=4741.295 \u4e0e proj_matL.fx=5050.040 \u76f8\u5dee 6.5%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/DogHouse/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Door/camera_00",
+      "warning": "mtxL.fx=4739.102 \u4e0e proj_matL.fx=5128.121 \u76f8\u5dee 8.2%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/ExtractorFan/camera_00",
+      "warning": "mtxL.fx=4739.102 \u4e0e proj_matL.fx=5128.121 \u76f8\u5dee 8.2%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Fridge/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Lunch/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Microwave/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Mirror/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Moka/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Moka1/camera_00",
+      "warning": "mtxL.fx=4743.069 \u4e0e proj_matL.fx=4900.477 \u76f8\u5dee 3.3%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Motorcycle/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Mouthwash/camera_00",
+      "warning": "mtxL.fx=4727.380 \u4e0e proj_matL.fx=5098.099 \u76f8\u5dee 7.8%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/OilCan/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Oven1/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Oven2/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Pots1/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Shower/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Sink/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/SoapDishes/camera_00",
+      "warning": "mtxL.fx=4735.693 \u4e0e proj_matL.fx=5348.685 \u76f8\u5dee 12.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/TV/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/TV1/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/TV2/camera_00",
+      "warning": "mtxL.fx=4737.292 \u4e0e proj_matL.fx=5028.214 \u76f8\u5dee 6.1%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Tablet/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Toilet/camera_00",
+      "warning": "mtxL.fx=4739.224 \u4e0e proj_matL.fx=5041.672 \u76f8\u5dee 6.4%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Vodka/camera_00",
+      "warning": "mtxL.fx=4735.693 \u4e0e proj_matL.fx=5348.685 \u76f8\u5dee 12.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "sample_id": "unbalanced/Washer/camera_00",
+      "warning": "mtxL.fx=4748.918 \u4e0e proj_matL.fx=5217.342 \u76f8\u5dee 9.9%\uff1b\u9ed8\u8ba4\u4f7f\u7528 mtxL\uff0c\u53ef\u7528 calib_source='proj' \u5207\u6362"
+    },
+    {
+      "warning": "Raw split scene-name overlap requires review before fine-tuning",
+      "overlaps": {
+        "test:train": [
+          "Cooker1"
+        ]
+      }
+    }
+  ],
+  "file_types": {
+    "rgb:.png": 76,
+    "depth_gt:.npy": 76,
+    "mask:.png": 76,
+    "valid_mask:.png": 76,
+    "meta:.json": 76,
+    "material_mask:.png": 76
+  },
+  "missing_files": [],
+  "missing_file_count": 0,
+  "raw_split_check": {
+    "scene_names": {
+      "train": [
+        "Bathroom",
+        "Bedroom",
+        "Bottle",
+        "Bottle1",
+        "BottledWater",
+        "Bottles1",
+        "Bucket",
+        "Canteen",
+        "Case",
+        "CashBox",
+        "CoffeeMaker",
+        "Cooker1",
+        "Cosmetics",
+        "DogHouse",
+        "Door",
+        "ExtractorFan",
+        "Fridge",
+        "Lunch",
+        "Microwave",
+        "Mirror",
+        "Moka",
+        "Moka1",
+        "Motorcycle",
+        "Mouthwash",
+        "OilCan",
+        "Oven1",
+        "Oven2",
+        "Pots1",
+        "Shower",
+        "Sink",
+        "SoapDishes",
+        "TV",
+        "TV1",
+        "TV2",
+        "Tablet",
+        "Toilet",
+        "Vodka",
+        "Washer"
+      ],
+      "test": [
+        "Balance",
+        "Barrel",
+        "Bidet",
+        "Blender",
+        "Bottles",
+        "Bowl",
+        "Computer",
+        "Cooker",
+        "Cooker1",
+        "Dinner",
+        "Jars",
+        "Library",
+        "Lid",
+        "Microwave1",
+        "Mirror1",
+        "Nintendo",
+        "Oven",
+        "Pillow",
+        "Pots",
+        "ShotGlasses",
+        "TV3",
+        "Tanks",
+        "Washer1",
+        "Water",
+        "Window",
+        "Window1"
+      ]
+    },
+    "scene_name_overlap": {
+      "test:train": [
+        "Cooker1"
+      ]
+    },
+    "interpretation": "Name overlap is a leakage warning, not proof of identical physical scenes/images"
+  },
+  "preprocess_source_sha256": {
+    "README.md": "5ccddbccd8a97825639a00cfb0f5f06d32666a6c1ebc590a1fe851c679ce281a",
+    "depth_pipeline/preprocess.py": "4befc3aabaf997091d7a3d749428456a396d62bbce3bc51bc6b377b471608d92",
+    "depth_pipeline/dataloader.py": "970d643302e8df8eb2ec213511f3508056d6e5cf3258474d6c9067fbc836d2f2"
+  },
+  "material_classes": {
+    "0": "opaque_or_diffuse",
+    "1": "strongly_distorted_reflection_or_transmission",
+    "2": "partially_distorted_reflection_or_transmission",
+    "3": "regular_specular_or_transparent"
+  },
+  "material_source": "https://arxiv.org/html/2301.08245v3#S3",
+  "region_protocol": {
+    "target": [
+      2,
+      3
+    ],
+    "ordinary": [
+      0
+    ],
+    "other": [
+      0,
+      1
+    ],
+    "separate_transparent_mirror": "unavailable in these masks"
+  },
+  "valid_definition": "saved valid_mask AND finite GT AND GT > 0",
+  "consistency_mask": "Separate stereo consistency mask; excluded from default validity",
+  "scene_overlap_across_processed_splits": {},
+  "limitations": [
+    "Only processed indexed splits audited; absence of test GT is not a test evaluation",
+    "Metadata K transform verified, not physical camera calibration accuracy",
+    "Existing mtxL vs projection focal discrepancy retained; no GT recomputation"
+  ],
+  "tree": [
+    "<root>/train/index.json",
+    "<root>/train/{balanced,unbalanced}/<scene>/camera_00/",
+    "  rgb.png, depth_gt.npy, valid_mask.png, mask.png, material_mask.png, meta.json",
+    "<root>/_pointcloud/, _pred_gt/, train/_viz/ (derived outputs; ignored)"
+  ]
+}
