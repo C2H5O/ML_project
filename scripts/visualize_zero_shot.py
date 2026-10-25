@@ -11,7 +11,7 @@ def main():
     p = argparse.ArgumentParser(description="Create 6-panel report figures from actual saved predictions")
     data_arguments(p)
     p.set_defaults(max_samples=5)
-    p.add_argument("--output-dir", type=Path, default=Path("results/zero_shot"))
+    p.add_argument("--output-dir", type=Path, default=Path("results/zero_shot_metric_large"))
     p.add_argument("--depth-min", type=float, default=0)
     p.add_argument("--depth-max", type=float, default=5)
     p.add_argument("--error-max", type=float, default=1)
@@ -35,7 +35,7 @@ def main():
     write_json(args.output_dir / "visualization_failures.json", failures)
     write_json(args.output_dir / "visualization_settings.json", dict(depth_min=args.depth_min, depth_max=args.depth_max,
                error_max=args.error_max, dpi=args.dpi, validity=args.validity,
-               alignment="evaluation-time GT median; raw relative units explicitly labelled"))
+               alignment="none", depth_units="metres", metric_protocol="calibrated native focal / 300"))
     return 1 if failures else 0
 
 

@@ -8,7 +8,39 @@ import time
 import numpy as np
 
 DA3_COMMIT = "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4"
-MODELS = ("depth-anything/DA3-BASE", "depth-anything/DA3-SMALL", "depth-anything/DA3METRIC-LARGE")
+MODEL_ID = "depth-anything/DA3METRIC-LARGE"
+MODELS = (MODEL_ID,)
+METRIC_PROTOCOL = "da3metric_focal_over_300_v1"
+
+
+def metric_depth_from_canonical(depth, input_K, input_shape):
+    """Official Metric-Large focal convention, at the actual network pixel grid.
+
+    Pinned API does not apply this conversion to the standalone metric model.
+    Resize-only preprocessing scales rows of K, including actual patch rounding.
+    No GT, scene statistic, baseline or predicted camera participates.
+    """
+    depth = np.asarray(depth, dtype=np.float32)
+    K = np.asarray(input_K, dtype=np.float64)
+    if depth.ndim != 2 or len(input_shape) != 2 or min(input_shape) <= 0:
+        raise ValueError("Expected native HxW depth and positive saved input dimensions")
+    if (K.shape != (3, 3) or not np.all(np.isfinite(K)) or
+            K[0, 0] <= 0 or K[1, 1] <= 0 or not np.allclose(K[2], [0, 0, 1])):
+        raise ValueError("Missing/unconfirmed calibrated pixel intrinsics")
+    h, w = input_shape
+    nh, nw = depth.shape
+    native_K = np.diag([nw / w, nh / h, 1.0]) @ K
+    focal = float((native_K[0, 0] + native_K[1, 1]) / 2)
+    factor = focal / 300.0
+    metric = depth.astype(np.float64) * factor
+    if np.any(np.isfinite(metric) & (np.abs(metric) > np.finfo(np.float32).max)):
+        raise ValueError("Metric depth float32 overflow")
+    return metric.astype(np.float32), dict(
+        protocol=METRIC_PROTOCOL, input_K=K.tolist(), native_K=native_K.tolist(),
+        input_shape=[int(h), int(w)], native_shape=[int(nh), int(nw)],
+        focal_native_px=focal, canonical_focal_px=300.0, multiplier=factor,
+        formula="depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+        gt_used=False, applied_exactly_once=True)
 
 
 def metric_flag(value):
@@ -52,16 +84,18 @@ def precision_for_device(torch, device, requested):
 
 class DA3Predictor:
     def __init__(self, model_id=MODELS[0], checkpoint=None, device="auto", precision="auto",
-                 revision=None):
+                 revision=None, require_gpu="RTX 4090D"):
         import torch
         import sys
-        if sys.version_info[:3] != (3, 10, 20) or torch.__version__.split('+')[0] != "2.3.1":
-            raise RuntimeError("Use the pinned Python 3.10.20 / torch 2.3.1 environment; run setup_env.sh")
+        from src.runtime import runtime_issues
+        issues = runtime_issues(sys.version_info, torch.__version__)
+        if issues:
+            raise RuntimeError("Existing environment is incompatible; do not auto-install/upgrade: " + "; ".join(issues))
         try:
             import depth_anything_3
             from depth_anything_3.api import DepthAnything3
         except ImportError as exc:
-            raise RuntimeError("DA3 runtime import failed. Run setup_env.sh; inspect the missing dependency: " + str(exc)) from exc
+            raise RuntimeError("DA3 import failed in the existing environment; inspect dependencies without auto-installing: " + str(exc)) from exc
         if model_id not in MODELS:
             raise ValueError(f"Supported official model IDs: {MODELS}")
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if device == "auto" else torch.device(device)
@@ -69,7 +103,19 @@ class DA3Predictor:
             raise ValueError("Only cpu/cuda devices are supported")
         if self.device.type == "cuda" and not torch.cuda.is_available():
             raise RuntimeError("CUDA requested but unavailable")
+        from src.runtime import require_gpu_name
+        require_gpu_name(torch, self.device, require_gpu)
         self.precision = precision_for_device(torch, self.device, precision)
+        package_dir = Path(next(iter(depth_anything_3.__path__))).resolve()
+        try:
+            code_commit = subprocess.check_output(["git", "-C", str(package_dir), "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL).strip()
+            changed = subprocess.check_output(["git", "-C", str(package_dir), "diff", "HEAD", "--name-only"], text=True).splitlines()
+        except (OSError, subprocess.CalledProcessError) as exc:
+            raise RuntimeError("Cannot establish official DA3 source provenance; no weights were loaded") from exc
+        if code_commit != DA3_COMMIT:
+            raise RuntimeError(f"Unsupported DA3 source commit {code_commit}; expected {DA3_COMMIT}. Do not change the existing environment automatically.")
+        if any(path != "src/depth_anything_3/utils/export/__init__.py" for path in changed):
+            raise RuntimeError("Official DA3 source has unreviewed computation changes; inspect them before metric inference")
         source = model_id
         checkpoint_hashes = None
         if checkpoint:
@@ -113,24 +159,22 @@ class DA3Predictor:
                                       infer_gs, use_ray_pose, ref_view_strategy)
 
         self.model.forward = types.MethodType(controlled_forward, self.model)
-        package_dir = Path(next(iter(depth_anything_3.__path__))).resolve()
-        try:
-            code_commit = subprocess.check_output(["git", "-C", str(package_dir), "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL).strip()
-        except (OSError, subprocess.CalledProcessError):
-            code_commit = "unknown"
-        if code_commit != DA3_COMMIT:
-            raise RuntimeError(f"Unsupported DA3 source commit {code_commit}; use setup_env.sh (expected {DA3_COMMIT})")
         self.metadata = dict(model_id=model_id, architecture=self.model.model_name,
                              checkpoint_kind="local_hf_directory" if checkpoint else "huggingface",
                              checkpoint_hashes=checkpoint_hashes, hf_revision=resolved_revision,
                              da3_code_commit=code_commit, precision=self.precision, device=str(self.device),
+                             da3_modified_files=changed,
+                             gpu_name=torch.cuda.get_device_name(self.device) if self.device.type == "cuda" else None,
+                             required_gpu=require_gpu,
                              precision_adapter="instance-local official forward AMP policy only",
+                             python=__import__('platform').python_version(),
                              torch=torch.__version__, torch_cuda=torch.version.cuda,
                              runtime_versions={p: importlib.metadata.version(p) for p in
                                                ["numpy", "pillow", "huggingface-hub", "safetensors"]},
-                             depth_semantics="metric_model" if "METRIC" in model_id else "relative_raw_prediction")
+                             depth_semantics="raw_metric_metres", metric_protocol=METRIC_PROTOCOL,
+                             gt_alignment=False)
 
-    def predict(self, rgb, process_res=560, process_res_method="upper_bound_resize"):
+    def predict(self, rgb, input_K, process_res=560, process_res_method="upper_bound_resize"):
         import torch
         if process_res_method not in {"upper_bound_resize", "lower_bound_resize"}:
             raise ValueError("Crop strategies are disallowed: output must cover the entire RGB/GT field of view")
@@ -150,7 +194,7 @@ class DA3Predictor:
                 torch.cuda.synchronize(self.device)
         except torch.cuda.OutOfMemoryError as exc:
             torch.cuda.empty_cache()
-            raise RuntimeError("CUDA OOM: lower --process-res (e.g. 392 or 280), keep single-image inference, or use DA3-SMALL") from exc
+            raise RuntimeError("CUDA OOM: release other GPU jobs or lower --process-res explicitly in a new output directory; model remains DA3METRIC-LARGE") from exc
         seconds = time.perf_counter() - start
         native = np.asarray(prediction.depth)
         if native.ndim != 3 or native.shape[0] != 1:
@@ -158,6 +202,13 @@ class DA3Predictor:
         native = native[0].astype(np.float32)
         if not (np.isfinite(native) & (native > 0)).any():
             raise ValueError("Model returned no finite positive depth")
-        return native, dict(seconds=seconds, native_shape=list(native.shape),
+        if metric_flag(prediction.is_metric) == 1:
+            raise ValueError("Unexpected already-metric upstream output; refusing possible double conversion")
+        processed_images = np.asarray(prediction.processed_images)
+        if processed_images.shape != (1, *native.shape, 3):
+            raise ValueError("Official processed image grid and depth grid disagree")
+        metric, calibration = metric_depth_from_canonical(native, input_K, rgb.shape[:2])
+        return native, metric, dict(seconds=seconds, native_shape=list(native.shape),
+                            metric_conversion=calibration,
                             peak_cuda_allocated_bytes=torch.cuda.max_memory_allocated(self.device) if gpu else None,
                             prediction_is_metric=metric_flag(prediction.is_metric))

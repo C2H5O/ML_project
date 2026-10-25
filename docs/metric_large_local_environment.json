@@ -1,0 +1,94 @@
+{
+  "python": "3.10.20 | packaged by conda-forge | (main, Jun 11 2026, 03:28:51) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "glibc": [
+    "",
+    ""
+  ],
+  "dependencies": {
+    "numpy": {
+      "version": "1.26.4",
+      "imported": true
+    },
+    "Pillow": {
+      "version": "10.4.0",
+      "imported": true
+    },
+    "opencv-python": {
+      "version": "4.10.0.84",
+      "imported": true
+    },
+    "matplotlib": {
+      "version": "3.9.2",
+      "imported": true
+    },
+    "einops": {
+      "version": "0.8.0",
+      "imported": true
+    },
+    "huggingface-hub": {
+      "version": "0.26.2",
+      "imported": true
+    },
+    "safetensors": {
+      "version": "0.4.5",
+      "imported": true
+    },
+    "omegaconf": {
+      "version": "2.3.0",
+      "imported": true
+    },
+    "addict": {
+      "version": "2.4.0",
+      "imported": true
+    },
+    "imageio": {
+      "version": "2.36.0",
+      "imported": true
+    },
+    "tqdm": {
+      "version": "4.67.1",
+      "imported": true
+    },
+    "evo": {
+      "version": "1.29.0",
+      "imported": true
+    },
+    "scipy": {
+      "version": "1.13.1",
+      "imported": true
+    },
+    "torchvision": {
+      "version": "0.18.1",
+      "imported": true
+    }
+  },
+  "issues": [
+    "Required GPU RTX 4090D; selected device is NVIDIA GeForce RTX 4060 Laptop GPU. No inference was run.",
+    "Target Linux/GLIBC compatibility cannot be validated on this host"
+  ],
+  "gcc": null,
+  "torch": "2.3.1",
+  "torch_cuda": "12.1",
+  "cuda_available": true,
+  "gpus": [
+    {
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "total_memory_bytes": 8585216000,
+      "bf16_supported": true,
+      "cuda_operation_passed": true
+    }
+  ],
+  "required_gpu_passed": false,
+  "xformers": {
+    "available": false,
+    "detail": "No module named 'xformers'",
+    "required": false
+  },
+  "da3_code_commit": "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4",
+  "da3_modified_files": [
+    "src/depth_anything_3/utils/export/__init__.py"
+  ],
+  "da3_api_imported": true
+}

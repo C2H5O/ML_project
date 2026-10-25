@@ -82,7 +82,29 @@ class BoosterDataset:
             rgb = np.array(image.convert("RGB"))
         if list(rgb.shape[:2]) != meta["processed_size"]:
             raise ValueError("RGB shape disagrees with metadata")
+        self.calibrated_K(meta)
         return rgb, meta, paths
+
+    @staticmethod
+    def calibrated_K(meta):
+        """Require the supplied saved K to match its recorded resize/crop."""
+        K = np.asarray(meta["K"], dtype=np.float64)
+        original = np.asarray(meta["K_original"], dtype=np.float64)
+        t = meta["transform"]
+        oh, ow = meta["original_size"]
+        rh, rw = t["resized_size"]
+        h, w = meta["processed_size"]
+        if (min(oh, ow, rh, rw, h, w) <= 0 or t["crop_x"] < 0 or t["crop_y"] < 0 or
+                t["crop_x"] + w > rw or t["crop_y"] + h > rh):
+            raise ValueError("Invalid saved resize/crop calibration geometry")
+        matrix = np.array([[rw/ow, 0, -t["crop_x"]], [0, rh/oh, -t["crop_y"]], [0, 0, 1]])
+        if (K.shape != (3, 3) or original.shape != (3, 3) or
+                not np.all(np.isfinite(K)) or not np.all(np.isfinite(original)) or
+                not np.allclose(K[2], [0, 0, 1]) or K[0, 0] <= 0 or K[1, 1] <= 0 or
+                not np.allclose([t["scale_x"], t["scale_y"]], [rw/ow, rh/oh]) or
+                not np.allclose(K, matrix @ original, atol=1e-5)):
+            raise ValueError("Saved K is inconsistent with original calibration and resize/crop")
+        return K
 
     def __getitem__(self, index):
         rgb, meta, paths = self.rgb_input(index)

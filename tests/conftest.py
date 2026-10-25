@@ -26,8 +26,10 @@ def booster_root(tmp_path):
             Image.fromarray(np.repeat(arr[...,None],3,axis=2)).save(folder / f"{name}.png")
         files = dict(rgb="rgb.png", depth_gt="depth_gt.npy", valid_mask="valid_mask.png",
                      mask="mask.png", material_mask="material_mask.png", meta="meta.json")
+        K = np.diag([600.,600.,1.]).tolist()
         meta = dict(sample_id=sid, split="train", depth_unit="m", processed_size=[2,3],
-                    original_size=[2,3], K=np.eye(3).tolist(), K_original=np.eye(3).tolist(),
+                    original_size=[2,3], K=K, K_original=K,
+                    transform=dict(resized_size=[2,3],crop_x=0,crop_y=0,scale_x=1.,scale_y=1.),
                     has_material_mask=True, files=files)
         (folder/"meta.json").write_text(json.dumps(meta))
         records.append(dict(sample_id=sid, dir=sid, meta=f"{sid}/meta.json"))

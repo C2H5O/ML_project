@@ -1,12 +1,17 @@
 # Documented CLI defaults; scripts intentionally take explicit CLI arguments.
-model_id: depth-anything/DA3-BASE
+model_id: depth-anything/DA3METRIC-LARGE
 split: train
 process_res: 560
+expected_native_shape_hw: [448, 560]
 process_res_method: upper_bound_resize
-device: auto
+device: cuda:0
 precision: auto
 seed: 42
-evaluation_mode: scale_aligned
+evaluation_mode: raw_metric
+gt_alignment: false
+metric_conversion: mean_native_focal_over_300
+existing_conda_env: vggtomast3r
+required_server_gpu: RTX 4090D
 validity: all
 aggregation: global_pixel_weighted
 target_material_ids: [2, 3]

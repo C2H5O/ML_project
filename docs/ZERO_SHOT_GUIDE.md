@@ -1,82 +1,76 @@
-# Protocol and reproducibility notes
+# DA3METRIC-LARGE protocol
 
-Use the executable Linux commands in [README](../README.md). CLI `--help` is
-available on all Python entry points. `configs/zero_shot.yaml` documents defaults;
-it is not implicitly loaded and cannot silently override CLI choices.
+The only active model is depth-anything/DA3METRIC-LARGE. Only Raw Metric
+Evaluation is accepted; no scale/shift fitting to GT is performed. Active server
+commands are in [README](../README.md), using existing environment vggtomast3r.
+No environment is created, no torch/dependency is installed/upgraded, and
+setup_env.sh now performs read-only checks only.
 
-## Model/API provenance
+## Verified source path
 
-Official repository: https://github.com/ByteDance-Seed/Depth-Anything-3
+Pinned official source: 3d835ec1a5802d64a8b8b15f817a1ab54809bfe4.
 
-Inspected/pinned source commit: `3d835ec1a5802d64a8b8b15f817a1ab54809bfe4`.
+- configs/da3metric-large.yaml: standalone ViT-L + DPT, no camera decoder/encoder.
+- model/da3.py: standalone DepthAnything3Net does not invoke apply_metric_scaling.
+- utils/alignment.py: apply_metric_scaling multiplies by mean(fx,fy)/300.
+- api.py: inference does not perform focal conversion when extrinsics are absent;
+  its pose alignment branch must not be used to manufacture metric scale.
+- InputProcessor: scales K for boundary resize and patch-divisibility resize.
+  The final user-confirmed process_res=560 preserves the saved 448x560 grid.
+  The superseded process_res=448 case maps to 364x448 and is regression-tested.
 
-Official API: https://github.com/ByteDance-Seed/Depth-Anything-3/blob/3d835ec1a5802d64a8b8b15f817a1ab54809bfe4/docs/API.md
+See the [official FAQ](https://github.com/ByteDance-Seed/Depth-Anything-3/blob/3d835ec1a5802d64a8b8b15f817a1ab54809bfe4/README.md)
+and [scaling code](https://github.com/ByteDance-Seed/Depth-Anything-3/blob/3d835ec1a5802d64a8b8b15f817a1ab54809bfe4/src/depth_anything_3/utils/alignment.py).
 
-The wrapper calls `DepthAnything3.from_pretrained`, `eval`, `inference_mode`, and
-`model.inference(image=[uint8_rgb], process_res=..., process_res_method=...,
-infer_gs=False, export_dir=None)`. `Prediction.depth` is read as `[1,H,W]`.
-Normalisation happens inside the official InputProcessor exactly once. Only
-single-view calls are made. Ground truth and intrinsics are never passed to DA3.
+The implementation preserves canonical network output, transforms saved calibrated
+K using actual native/output dimensions, converts once to metres, then resizes
+only predictions back to the saved GT grid. It does not pass GT or masks to the
+model. Calibration K is metadata for output conversion, not a GT-derived scale.
+Unexpected is_metric=1 from the standalone pinned implementation is rejected.
+GT is used only for validity/errors, never to alter a prediction.
 
-Two explicit compatibility accommodations are used:
+Model weights are float32, with an instance-local AMP wrapper to honour BF16/FP16
+or explicit FP32. The underlying official network call/preprocessing/output logic
+is preserved. The retained lazy-export patch tool is not executed automatically;
+existing working server code is not silently patched. A source-commit mismatch
+fails before a reported experiment can be accepted.
 
-1. `patch_da3_exports.py` moves exporter imports into their existing branches,
-   avoiding mandatory open3d/pycolmap/moviepy/GS imports during depth-only use.
-   The script checks the exact source commit, rejects unknown edits, and can
-   verify its own idempotent patch. No model/preprocessing code is edited.
-2. The model instance's `forward` AMP wrapper preserves the exact underlying
-   official network call but obeys requested precision. Upstream hardcodes an
-   autocast policy, so an outer user autocast alone is insufficient. Model
-   parameters stay float32; CUDA AMP is explicit, CPU uses float32. All numerical
-   precision choices are stored in run metadata.
+## Data and material definitions
 
-The dependency set covers imports required by API, preprocessing, dual DPT,
-DINOv2, pose alignment, and output processing, plus evaluation/plots/tests.
-Optional exporters are outside this baseline. Installation is constrained so
-PyTorch/torchvision cannot be upgraded by pip resolution. The resolver may choose
-compatible transitive packages; save `pip freeze` for each server environment.
-No GLIBC or CUDA system modification, xformers compilation or GS installation
-is required. A Windows smoke test cannot certify CentOS/GLIBC binary compatibility.
+The saved Booster depth is already metric. Original disparity was converted by
+the existing preprocessing using mtxL and its recorded stereo baseline, then
+resized/cropped with a corresponding K update. Do not repeat those operations.
+Use saved K, not K_original, as the input-grid calibration for the DA3 resize.
 
-## Data/metric caveats
+Existing mtxL/projection focal discrepancies remain warnings. The dataset audit
+verifies K transform consistency, not independent physical calibration accuracy.
+Predictions and evaluation use the supplied calibration convention unchanged.
 
-The supplied metric GT comes from a previous preprocessing job and is authoritative
-for this stage. Its calibration choice is recorded, with focal disagreements
-retained as warnings. Recalibrating or regenerating depth would define a new GT
-version and is outside this baseline. Physical GT correctness is not inferred
-solely from finite values or successful shape checks.
+The [Booster paper](https://arxiv.org/html/2301.08245v3) defines severity classes:
+0 opaque/diffuse; 1 strongly distorted reflection/transmission; 2 partly distorted
+recognizable appearance; 3 regular reflection/transmission. Target=2+3 and
+ordinary=0 are declared project groups; other=0+1 and each class are also saved.
+These labels do not separate transparent versus mirror semantics.
 
-Material semantics follow the [Booster paper](https://arxiv.org/html/2301.08245v3),
-Section III: IDs 0 through 3 are increasing specularity/transparency levels.
-Class 0 is opaque/diffuse; class 1 has heavily distorted reflected/transmitted
-appearance; class 2 retains partly distorted recognizable appearance; class 3
-is regular reflection/transmission. There are no independently confirmed
-transparent vs mirror semantic labels in the processed 0–3 mask. Such separate
-scores are unavailable. Target=2+3 is an explicit project protocol, and all
-four severity classes are included so no grouping information is hidden.
+Only processed train is currently available. Keep balanced/unbalanced observations
+of the same scene together in future splits. Raw directory names overlap at
+Cooker1 across train/test; resolve that warning before any future fine-tuning
+partition. No future training or hyperparameter search is implemented here.
+Head-only and LoRA + Head on A800 80GB must share the later total <=60h budget.
 
-Only `train` is currently processed. Zero-shot evaluation on it is permissible
-because this stage does not train, but those values are not a held-out test
-benchmark. Later head/LoRA experiments must first freeze a scene-level partition,
-group paired balanced/unbalanced observations and avoid duplicate input leakage.
+## Reproducibility and failure boundaries
 
-Default aggregation is global pixel-weighted across selected observations. The
-two stereo setups are separate GT observations of the same scene and must not
-be mistaken for twice as many independent scenes. `--subset balanced` or
-`--subset unbalanced` is available to report either setup separately. Missing
-GT/masks or unknown units/IDs produce explicit failures rather than guessed scores.
+Record model Hub SHA or local checkpoint hashes, official code commit, environment
+versions, device/GPU, precision, actual native dimensions, saved/native K,
+calibration hashes, multiplier and no-GT-alignment flags. The run configuration
+cannot be mixed with prior BASE outputs or a different precision/resolution.
+Resume validates RGB, calibration, config and all numerical array hashes.
+Evaluation recomputes the calibration-only conversion to verify provenance.
 
-## Reproducible comparison
-
-Keep model Hub revision, official code commit, data/audit version, split, sample
-selection, process resolution/method, precision, validity protocol and region
-definitions fixed across baselines. Check `metrics_summary.json` completeness,
-per-region sample/pixel counts and per-image prediction coverage before using
-numbers in a report. Seed is recorded; deterministic bitwise GPU equivalence
-across different drivers/devices is not guaranteed.
-
-The figures use the same fixed numeric limits for GT, raw and aligned depth,
-while explicitly distinguishing raw relative units from metres. Their error
-panel uses GT-aligned prediction only. For a future metric model, raw metric
-numeric evaluation is supported; the current figure layout remains explicitly
-GT-aligned and should not be used as evidence of metric calibration.
+The tests include analytical focal cases, anisotropic patch rounding, missing K,
+comparison against official InputProcessor and apply_metric_scaling, no-double-
+scaling verification, GT perturbations that change errors without changing depth,
+material metrics, empty regions, raw output formats, resume and GPU-name guard.
+Tests use synthetic arrays. All 76 real Booster calibrations were independently
+checked against official preprocessing/scaling without a downloaded checkpoint.
+There is no remote server execution because SSH is prohibited.

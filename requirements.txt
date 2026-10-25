@@ -1,5 +1,6 @@
-# Minimal single-image DA3 runtime after the documented lazy-export patch.
-# Install with constraints.txt so the resolver cannot upgrade torch/torchvision.
+# Dependency REFERENCE from the previously tested local environment.
+# Do not install this over the verified vggtomast3r server environment.
+# setup_env.sh is read-only; missing runtime imports require targeted review.
 numpy==1.26.4
 Pillow==10.4.0
 opencv-python==4.10.0.84

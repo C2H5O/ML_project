@@ -1,0 +1,63 @@
+{
+  "model_id": "depth-anything/DA3METRIC-LARGE",
+  "final_process_res": 560,
+  "expected_native_shape_hw": [
+    448,
+    560
+  ],
+  "precision_policy": "auto: BF16 preferred, FP16 only if BF16 unsupported",
+  "server_conda_environment": "vggtomast3r",
+  "environment_policy": "reuse only; no creation, installs or upgrades performed in this revision",
+  "tests": {
+    "passed": 34,
+    "failed": 0,
+    "warnings": 14,
+    "warning_kind": "Matplotlib/pyparsing deprecations during synthetic PNG test"
+  },
+  "static_checks": {
+    "python_compile": true,
+    "git_diff_check": true,
+    "bash_syntax": true
+  },
+  "dataset_reaudit": {
+    "selected": 76,
+    "readable": 76,
+    "errors": 0,
+    "warnings": 50,
+    "missing_files": 0
+  },
+  "official_scale_comparison": {
+    "selected": 76,
+    "passed": 76,
+    "errors": 0,
+    "weights_loaded": false,
+    "gt_alignment": false,
+    "network_outputs": "synthetic probes; not model predictions",
+    "native_shapes_hw": [
+      [
+        448,
+        560
+      ]
+    ],
+    "factor_range": [
+      2.3459370453558903,
+      2.3579371301802516
+    ]
+  },
+  "real_metric_checkpoint_loaded": false,
+  "gpu_4090d_smoke_test": "not_run",
+  "full_metric_inference": "not_run",
+  "raw_metric_experiment_metrics": null,
+  "blocker": "Server prohibits SSH; direct target-server execution is unavailable from this session",
+  "local_source_only_environment": "existing local .venv; Python 3.10.20 / torch 2.3.1, not the uninspected server environment",
+  "server_environment_verified": false,
+  "training_implemented": false,
+  "future_training": {
+    "gpu": "A800 80GB",
+    "methods": [
+      "Head-only",
+      "LoRA + Head"
+    ],
+    "combined_budget_hours_max": 60
+  }
+}

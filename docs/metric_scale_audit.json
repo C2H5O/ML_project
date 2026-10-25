@@ -1,0 +1,4043 @@
+{
+  "model_id": "depth-anything/DA3METRIC-LARGE",
+  "inspected_official_commit": "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4",
+  "process_res": 560,
+  "selected": 76,
+  "passed": 76,
+  "errors": [],
+  "samples": [
+    {
+      "sample_id": "balanced/Bathroom/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.8137058075861,
+          0.0,
+          280.13469457900163
+        ],
+        [
+          0.0,
+          706.0376773985357,
+          223.531804110342
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.8137058075861,
+          0.0,
+          280.13469457900163
+        ],
+        [
+          0.0,
+          706.0376773985357,
+          223.531804110342
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9256916030608,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3530856386768693,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Bedroom/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Bottle/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Bottle1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/BottledWater/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Bottles1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9839974220436,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.353279991406812,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Bucket/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Canteen/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9839974220436,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.353279991406812,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Case/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          707.5801686688487,
+          0.0,
+          283.0618481719745
+        ],
+        [
+          0.0,
+          707.1821094393023,
+          218.40105862783466
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          707.5801686688487,
+          0.0,
+          283.0618481719745
+        ],
+        [
+          0.0,
+          707.1821094393023,
+          218.40105862783466
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.3811390540754,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3579371301802516,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/CashBox/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/CoffeeMaker/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Cooker1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.4536313749172,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3515121045830574,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Cosmetics/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.6597030054365,
+          0.0,
+          279.86656962183883
+        ],
+        [
+          0.0,
+          705.785763961535,
+          224.78475212778548
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.6597030054365,
+          0.0,
+          279.86656962183883
+        ],
+        [
+          0.0,
+          705.785763961535,
+          224.78475212778548
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.7227334834859,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3524091116116197,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 9.5367431640625e-07
+    },
+    {
+      "sample_id": "balanced/DogHouse/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Door/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.4536313749172,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3515121045830574,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/ExtractorFan/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.4536313749172,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3515121045830574,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Fridge/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Lunch/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Microwave/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Mirror/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Moka/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Moka1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9839974220436,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.353279991406812,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Motorcycle/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Mouthwash/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          703.5886292481227,
+          0.0,
+          279.2939580085659
+        ],
+        [
+          0.0,
+          703.9735979654115,
+          226.6796230952922
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          703.5886292481227,
+          0.0,
+          279.2939580085659
+        ],
+        [
+          0.0,
+          703.9735979654115,
+          226.6796230952922
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 703.7811136067671,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3459370453558903,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/OilCan/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Oven1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Oven2/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Pots1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Shower/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Sink/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/SoapDishes/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 704.7335083622388,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.349111694540796,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/TV/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/TV1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/TV2/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.0638466067924,
+          0.0,
+          277.3117935900607
+        ],
+        [
+          0.0,
+          705.4610790201035,
+          225.32993781577377
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.0638466067924,
+          0.0,
+          277.3117935900607
+        ],
+        [
+          0.0,
+          705.4610790201035,
+          225.32993781577377
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.2624628134479,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.350874876044826,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Tablet/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Toilet/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Vodka/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 704.7335083622388,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.349111694540796,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "balanced/Washer/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Bathroom/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.8137058075861,
+          0.0,
+          280.13469457900163
+        ],
+        [
+          0.0,
+          706.0376773985357,
+          223.531804110342
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.8137058075861,
+          0.0,
+          280.13469457900163
+        ],
+        [
+          0.0,
+          706.0376773985357,
+          223.531804110342
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9256916030608,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3530856386768693,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Bedroom/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Bottle/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Bottle1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/BottledWater/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Bottles1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9839974220436,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.353279991406812,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Bucket/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Canteen/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9839974220436,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.353279991406812,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Case/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          707.5801686688487,
+          0.0,
+          283.0618481719745
+        ],
+        [
+          0.0,
+          707.1821094393023,
+          218.40105862783466
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          707.5801686688487,
+          0.0,
+          283.0618481719745
+        ],
+        [
+          0.0,
+          707.1821094393023,
+          218.40105862783466
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.3811390540754,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3579371301802516,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/CashBox/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/CoffeeMaker/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Cooker1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.4536313749172,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3515121045830574,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Cosmetics/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.6597030054365,
+          0.0,
+          279.86656962183883
+        ],
+        [
+          0.0,
+          705.785763961535,
+          224.78475212778548
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.6597030054365,
+          0.0,
+          279.86656962183883
+        ],
+        [
+          0.0,
+          705.785763961535,
+          224.78475212778548
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.7227334834859,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3524091116116197,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 9.5367431640625e-07
+    },
+    {
+      "sample_id": "unbalanced/DogHouse/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Door/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.4536313749172,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3515121045830574,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/ExtractorFan/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3332608048122,
+          0.0,
+          275.62067550739727
+        ],
+        [
+          0.0,
+          705.5740019450224,
+          226.8662854128076
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.4536313749172,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3515121045830574,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Fridge/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Lunch/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Microwave/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Mirror/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Moka/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Moka1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.9236682431147,
+          0.0,
+          276.34445672895487
+        ],
+        [
+          0.0,
+          706.0443266009725,
+          222.27770089156945
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.9839974220436,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.353279991406812,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Motorcycle/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Mouthwash/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          703.5886292481227,
+          0.0,
+          279.2939580085659
+        ],
+        [
+          0.0,
+          703.9735979654115,
+          226.6796230952922
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          703.5886292481227,
+          0.0,
+          279.2939580085659
+        ],
+        [
+          0.0,
+          703.9735979654115,
+          226.6796230952922
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 703.7811136067671,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3459370453558903,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/OilCan/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Oven1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Oven2/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Pots1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Shower/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Sink/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/SoapDishes/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 704.7335083622388,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.349111694540796,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/TV/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/TV1/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/TV2/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.0638466067924,
+          0.0,
+          277.3117935900607
+        ],
+        [
+          0.0,
+          705.4610790201035,
+          225.32993781577377
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.0638466067924,
+          0.0,
+          277.3117935900607
+        ],
+        [
+          0.0,
+          705.4610790201035,
+          225.32993781577377
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.2624628134479,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.350874876044826,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Tablet/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Toilet/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          705.3513856880354,
+          0.0,
+          281.09949391926415
+        ],
+        [
+          0.0,
+          705.7963498639756,
+          221.12422224842848
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 705.5738677760055,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.351912892586685,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Vodka/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          704.8258991184944,
+          0.0,
+          278.2163153677237
+        ],
+        [
+          0.0,
+          704.6411176059834,
+          224.78707266225737
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 704.7335083622388,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.349111694540796,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    },
+    {
+      "sample_id": "unbalanced/Washer/camera_00",
+      "protocol": "da3metric_focal_over_300_v1",
+      "input_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "native_K": [
+        [
+          706.7941915099183,
+          0.0,
+          283.6494931456808
+        ],
+        [
+          0.0,
+          707.3499109755218,
+          223.09345927465282
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "input_shape": [
+        448,
+        560
+      ],
+      "native_shape": [
+        448,
+        560
+      ],
+      "focal_native_px": 707.07205124272,
+      "canonical_focal_px": 300.0,
+      "multiplier": 2.3569068374757336,
+      "formula": "depth_m = canonical_output * mean(fx_native, fy_native) / 300",
+      "gt_used": false,
+      "applied_exactly_once": true,
+      "max_synthetic_probe_difference_m": 4.76837158203125e-07
+    }
+  ],
+  "test_kind": "source-only calibration/units validation with synthetic network output probes",
+  "weights_loaded": false,
+  "model_inference_performed": false,
+  "gt_alignment": false,
+  "caveat": "Not a GPU model test or an experimental accuracy result"
+}
