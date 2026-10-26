@@ -119,7 +119,12 @@ def ordinal_result(pred, gt, pairs, threshold, min_pairs=1, min_unique_pixels=1)
 
 def relative_geometry(pred, gt, mask, seed=42, pair_draws=20000, gt_gap_m=0.02,
                       ring_radius=30, boundary_margin=2, compression_ratio=0.25,
-                      min_pairs=1, min_unique_pixels=1, return_details=False):
+                      min_pairs=1, min_unique_pixels=1, return_details=False, pair_indices=None):
+    """Optionally score a shared candidate-pair set supplied by paired analysis.
+
+    GT acceptance and prediction-validity checks still apply. The default path
+    preserves the existing independent experiment's sampler and RNG order.
+    """
     if (pair_draws < 1 or gt_gap_m <= 0 or ring_radius < 1 or boundary_margin < 0 or
             not 0 < compression_ratio < 1 or boundary_margin >= ring_radius or
             min_pairs < 1 or min_unique_pixels < 1):
@@ -131,11 +136,22 @@ def relative_geometry(pred, gt, mask, seed=42, pair_draws=20000, gt_gap_m=0.02,
         raise ValueError('Mask shape mismatch')
     rng = np.random.default_rng(seed)
     t, b, f = [np.flatnonzero(x & v) for x in (mask, ~mask, np.ones(mask.shape, bool))]
-    tb = local_pairs(mask, v, pair_draws, rng, ring_radius, boundary_margin)
-    pairs = dict(full_image=_uniform_pairs(rng, f, f, pair_draws),
-                 transparent_transparent=_uniform_pairs(rng, t, t, pair_draws),
-                 transparent_background=tb,
-                 background_background=_uniform_pairs(rng, b, b, pair_draws))
+    if pair_indices is None:
+        tb = local_pairs(mask, v, pair_draws, rng, ring_radius, boundary_margin)
+        pairs = dict(full_image=_uniform_pairs(rng, f, f, pair_draws),
+                     transparent_transparent=_uniform_pairs(rng, t, t, pair_draws),
+                     transparent_background=tb,
+                     background_background=_uniform_pairs(rng, b, b, pair_draws))
+    else:
+        expected = {'full_image', 'transparent_transparent', 'transparent_background', 'background_background'}
+        if set(pair_indices) != expected:
+            raise ValueError('Shared pair categories do not match the geometry protocol')
+        pairs = {key: np.asarray(value) for key, value in pair_indices.items()}
+        for pair in pairs.values():
+            if (pair.ndim != 2 or pair.shape[1] != 2 or pair.dtype.kind not in 'iu' or
+                    (pair.size and (pair.min() < 0 or pair.max() >= g.size))):
+                raise ValueError('Shared pairs must be integer Nx2 pixel indices within the GT grid')
+    candidate_pairs = pairs
     ordinal, accepted = {}, {}
     local_source, local_ring = local_pair_regions(mask, v, ring_radius, boundary_margin)
     pool_sizes = dict(full_image=(len(f), len(f)), transparent_transparent=(len(t), len(t)),
@@ -178,5 +194,6 @@ def relative_geometry(pred, gt, mask, seed=42, pair_draws=20000, gt_gap_m=0.02,
                               penetration_definition='GT front pairs: reversed or pred log(bg/T) < ratio * GT log(bg/T)',
                               gt_scaling_for_ordinal_or_penetration=False))
     if return_details:
-        result['_details'] = dict(ordinal_pairs=accepted, penetration_pairs=pairs)
+        result['_details'] = dict(ordinal_pairs=accepted, penetration_pairs=pairs,
+                                  candidate_pairs=candidate_pairs)
     return result

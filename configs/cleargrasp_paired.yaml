@@ -1,0 +1,27 @@
+# Same flat YAML / repository-relative path convention as cleargrasp_zero_shot.yaml.
+# REQUIRED: set actual Linux data root containing real-test/ before execution.
+data_root: null
+transparent_output: results/cleargrasp_smoke
+output_dir: results/cleargrasp_paired
+checkpoint: checkpoints/DA3METRIC-LARGE
+registration_review: null
+expected_samples: 20
+process_res: 560
+device: cuda:0
+precision: bf16
+offline: true
+seed: 42
+pair_draws: 20000
+gt_gap_m: 0.02
+ring_radius: 30
+boundary_margin: 2
+compression_ratio: 0.25
+erosion_margin: 2
+bootstrap_draws: 10000
+min_pairs: 30
+min_unique_pixels: 10
+depth_max: 2.0
+error_max: 0.5
+difference_max: 0.5
+log_difference_max: 1.0
+figure_dpi: 120
