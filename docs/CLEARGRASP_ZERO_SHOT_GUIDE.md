@@ -268,9 +268,45 @@ python scripts/run_cleargrasp_zero_shot.py \
   --config configs/cleargrasp_zero_shot.yaml
 ```
 
-Or after inspection: `bash scripts/run_cleargrasp_zero_shot.sh --config configs/cleargrasp_zero_shot.yaml`.
-The wrapper only forwards arguments; it sets no environment variables and carries
-no data/checkpoint/output paths. Set a new output directory in YAML if changing inputs,
+### One-command random 20-sample pipeline (server)
+
+After filling in `data_root`, `checkpoint` and `output_dir` in the YAML, run:
+
+```bash
+bash scripts/run_cleargrasp_zero_shot.sh
+```
+
+Or select another YAML:
+
+```bash
+bash scripts/run_cleargrasp_zero_shot.sh --config configs/cleargrasp_zero_shot.yaml
+```
+
+The Bash script uses `conda run --no-capture-output -n vggtomast3r` with the existing
+environment, so no separate activation is required. It neither creates an
+environment nor installs dependencies. Conda must already be available on PATH.
+All dataset/checkpoint/output paths are still read only from YAML.
+
+The script enables `--smoke-test`: it selects exactly 20 unique random RGB samples
+from the configured split, using the YAML seed (default 42), checks all selected
+GT/masks and their dimensions **before initializing the GPU model**, then runs
+inference, evaluation and visualization in a single Python process. It forces the
+20-sample selection and enables both downstream stages even if YAML has `all: true`
+or either skip flag set. Fewer than 20 available samples is an error. Missing EXR
+support or unreadable annotations stops the pipeline before GPU model loading and
+records details in `smoke_preflight.json`. It does not reread every sample in all
+four splits; use the standalone inspection command for a complete inventory.
+
+Repeated runs with the same seed select the same samples and resume verified
+predictions. To draw a different set, edit `seed` and choose a new `output_dir` in
+YAML. The runner prints four stage labels and the final output/metric/contact-sheet
+paths. Any failed stage yields a nonzero exit status. The Bash entry always runs
+the 20-sample pipeline; use the Python entry directly for a full dataset run.
+The one-command change passed 46 related synthetic/mock tests, including exact
+selection count, stage ordering and preflight failure before GPU initialization.
+The Linux Bash command and real GPU execution still require server verification.
+
+Set a new output directory in YAML if changing inputs,
 selection, checkpoint bytes, process resolution, device or precision. Resume is
 automatic for exactly matching configurations with valid output checksums. Partial
 NPYs lacking `prediction.json` are regenerated. Completed but corrupt outputs are

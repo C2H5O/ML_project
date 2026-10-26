@@ -4,7 +4,7 @@ import _bootstrap
 from src.common import (read_json, write_json, write_npy, digest_file, sample_output,
                         protect_dataset, positive_int)
 from src.datasets.cleargrasp import (SPLITS, discover, select_samples, calibration,
-                                     read_rgb, path_for)
+                                     read_rgb, path_for, annotations)
 from src.inference.da3_zero_shot import DA3Predictor, metric_depth_from_canonical, DA3_COMMIT
 from src.evaluation.cleargrasp import saved_prediction, evaluate_saved
 from src.visualization.cleargrasp import visualize_saved
@@ -25,11 +25,17 @@ def parser():
     p.add_argument('--error-max', type=float, default=0.5)
     p.add_argument('--skip-evaluation', action='store_true')
     p.add_argument('--skip-visualization', action='store_true')
+    p.add_argument('--smoke-test', action='store_true',
+                   help='Require exactly 20 random samples, preflight GT/mask before GPU loading, enable evaluation and visualization')
     protocol_arguments(p)
     return p
 
 
 def run(args):
+    if args.smoke_test:
+        args.max_samples, args.all = 20, False
+        args.skip_evaluation, args.skip_visualization = False, False
+    print('[1/4] Preparing configured dataset and sample selection', flush=True)
     protect_dataset(args.data_root, args.output_dir)
     checkpoint = args.checkpoint.resolve()
     names = ('config.json', 'model.safetensors')
@@ -39,6 +45,9 @@ def run(args):
     root = Path(manifest['data_root'])
     protect_dataset(root, args.output_dir)
     selected = select_samples(manifest, args.split, args.max_samples, args.seed, args.all)
+    if args.smoke_test and len(selected) != 20:
+        raise ValueError(f'Smoke test requires 20 unique RGB samples; {args.split} contains only {len(selected)}')
+    preflight = []
     # Bind resume to RGB bytes and calibrated K; annotations never enter model inference.
     for s in selected:
         rgb = read_rgb(path_for(root, s, 'rgb'))
@@ -50,6 +59,27 @@ def run(args):
         except Exception as exc:
             s['calibration'] = None
             s['calibration_warning'] = str(exc)
+        if args.smoke_test:
+            try:
+                import numpy as np
+                gt, mask, info = annotations(root, s, rgb.shape[:2])
+                valid = np.isfinite(gt) & (gt > 0)
+                if not valid.any():
+                    raise ValueError('No finite positive GT pixels; cannot evaluate this sample')
+                preflight.append(dict(sample_id=s['sample_id'], status='available',
+                    gt_valid_fraction=float(valid.mean()), transparent_pixels=int(mask.sum()),
+                    metric_calibration_available=s['calibration'] is not None, annotations=info))
+            except Exception as exc:
+                preflight.append(dict(sample_id=s['sample_id'], status='failed', error=str(exc)))
+    if args.smoke_test:
+        write_json(args.output_dir / 'smoke_preflight.json', dict(split=args.split, seed=args.seed,
+            selected=len(selected), records=preflight))
+        rejected = [r for r in preflight if r['status'] == 'failed']
+        if rejected:
+            raise RuntimeError(f'Annotation preflight failed for {len(rejected)}/20 samples; '
+                f'no GPU model was loaded. See {args.output_dir / "smoke_preflight.json"}. '
+                f'First error: {rejected[0]["error"]}')
+        print(f'Preflight passed: 20 samples from {args.split}, seed={args.seed}', flush=True)
     config = dict(model_id='depth-anything/DA3METRIC-LARGE', da3_commit=DA3_COMMIT,
         checkpoint_hashes={n: digest_file(checkpoint / n) for n in names},
         process_res=args.process_res, process_res_method='upper_bound_resize', precision=args.precision,
@@ -69,6 +99,7 @@ def run(args):
     manifest['samples'] = selected
     write_json(output / 'sample_manifest.json', manifest)
     records, failures, predictor = [], [], None
+    print('[2/4] DA3 independent RGB inference (or verified resume)', flush=True)
     for s in selected:
         folder = sample_output(output, s['split'], s['sample_id'])
         try:
@@ -115,16 +146,21 @@ def run(args):
                 failed=len(failures), pending=len(selected)-len(records)))
     evaluation_failures, figure_failures = [], []
     if not args.skip_evaluation:
+        print('[3/4] Raw metric and relative geometry evaluation', flush=True)
         evaluation_failures = evaluate_saved(output, seed=args.seed, pair_draws=args.pair_draws,
             gt_gap_m=args.gt_gap_m, ring_radius=args.ring_radius, boundary_margin=args.boundary_margin,
             compression_ratio=args.compression_ratio)
     if not args.skip_visualization:
+        print('[4/4] Rendering individual panels and contact sheet', flush=True)
         figure_failures = visualize_saved(output, depth_max=args.depth_max, error_max=args.error_max)
     meta = read_json(metadata_path)
     failed = failures or evaluation_failures or figure_failures
     meta.update(status='completed_with_failures' if failed else 'completed',
                 evaluation_failures=len(evaluation_failures), visualization_failures=len(figure_failures))
     write_json(metadata_path, meta)
+    print(f'Run status: {meta["status"]}\nOutput: {output.resolve()}\n'
+          f'Metrics: {output / "metrics" / "summary.md"}\n'
+          f'Contact sheet: {output / "contact_sheet.png"}', flush=True)
     return 1 if failed else 0
 
 

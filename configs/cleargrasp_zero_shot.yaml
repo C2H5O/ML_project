@@ -2,6 +2,8 @@
 # Edit data_root after uploading the dataset to Linux. Do not use environment variables.
 # Relative paths resolve against ML_project/, independent of the caller's CWD.
 # python scripts/run_cleargrasp_zero_shot.py --config configs/cleargrasp_zero_shot.yaml
+# One-command random 20-sample inference + evaluation + visualization:
+# bash scripts/run_cleargrasp_zero_shot.sh
 data_root: null  # REQUIRED: replace with the actual absolute Linux dataset path
 model_id: depth-anything/DA3METRIC-LARGE
 checkpoint: checkpoints/DA3METRIC-LARGE

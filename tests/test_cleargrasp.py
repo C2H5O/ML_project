@@ -316,3 +316,77 @@ def test_disabled_opencv_is_not_retried_for_every_file(tmp_path, monkeypatch):
         with pytest.raises(RuntimeError, match='server vggtomast3r'):
             data.read_depth(tmp_path/name)
     assert len(calls) == 1
+
+
+def smoke_fixture(tmp_path):
+    root, output = tmp_path/'dataset', tmp_path/'output'
+    fixture(root, tuple(f'{i:04d}' for i in range(23)))
+    checkpoint = tmp_path/'checkpoint'
+    checkpoint.mkdir()
+    for name in ('config.json', 'model.safetensors'):
+        (checkpoint/name).write_bytes(b'fixture only')
+    config = tmp_path/'smoke.yaml'
+    config.write_text(yaml.safe_dump(dict(data_root=str(root), output_dir=str(output),
+        checkpoint=str(checkpoint), seed=42, max_samples=1, all=True,
+        skip_evaluation=True, skip_visualization=True)))
+    return root, output, config
+
+
+def test_smoke_pipeline_forces_20_and_all_stages(tmp_path, monkeypatch):
+    root, output, config = smoke_fixture(tmp_path)
+    module = load_runner()
+    calls = []
+    def annotation(root, sample, shape):
+        calls.append('preflight')
+        return np.ones(shape), np.zeros(shape, bool), {}
+    class Predictor:
+        metadata = dict(test_fixture=True)
+        def __init__(self, **kwargs):
+            assert calls == ['preflight']*20
+            calls.append('init')
+        def predict_canonical(self, *args):
+            calls.append('predict')
+            return np.ones((10, 15), np.float32), dict(seconds=.01, peak_cuda_allocated_bytes=0)
+    monkeypatch.setattr(module, 'annotations', annotation)
+    monkeypatch.setattr(module, 'DA3Predictor', Predictor)
+    monkeypatch.setattr(module, 'evaluate_saved', lambda *a, **k: calls.append('evaluate') or [])
+    monkeypatch.setattr(module, 'visualize_saved', lambda *a, **k: calls.append('visualize') or [])
+    args = module.parser().parse_args(['--config', str(config), '--smoke-test'])
+    before = dict(os.environ)
+    assert module.run(args) == 0
+    assert calls == ['preflight']*20 + ['init'] + ['predict']*20 + ['evaluate', 'visualize']
+    assert dict(os.environ) == before
+    manifest = read_json(output/'sample_manifest.json')
+    expected = data.select_samples(data.discover(root), 'real-test', 20, 42)
+    assert [s['sample_id'] for s in manifest['samples']] == [s['sample_id'] for s in expected]
+    assert len({s['sample_id'] for s in manifest['samples']}) == 20
+    assert read_json(output/'smoke_preflight.json')['selected'] == 20
+
+
+def test_smoke_gt_failure_stops_before_model_loading(tmp_path, monkeypatch):
+    _, output, config = smoke_fixture(tmp_path)
+    module = load_runner()
+    def broken(*args):
+        raise RuntimeError('EXR reader unavailable')
+    monkeypatch.setattr(module, 'annotations', broken)
+    monkeypatch.setattr(module, 'DA3Predictor', lambda **kw: pytest.fail('GPU model must not be loaded'))
+    args = module.parser().parse_args(['--config', str(config), '--smoke-test'])
+    with pytest.raises(RuntimeError, match='no GPU model was loaded'):
+        module.run(args)
+    report = read_json(output/'smoke_preflight.json')
+    assert len(report['records']) == 20
+    assert all(r['status'] == 'failed' for r in report['records'])
+    assert not (output/'predictions').exists()
+
+
+def test_smoke_requires_exactly_20_available_samples(tmp_path):
+    root, _, config = smoke_fixture(tmp_path)
+    # Restrict discovery to a smaller fixture without changing the dataset files.
+    module = load_runner()
+    from unittest.mock import patch
+    manifest = data.discover(root)
+    manifest['samples'] = manifest['samples'][:2]
+    with patch.object(module, 'discover', return_value=manifest):
+        args = module.parser().parse_args(['--config', str(config), '--smoke-test'])
+        with pytest.raises(ValueError, match='requires 20 unique RGB samples'):
+            module.run(args)
