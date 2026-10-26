@@ -175,6 +175,12 @@ class DA3Predictor:
                              gt_alignment=False)
 
     def predict(self, rgb, input_K, process_res=560, process_res_method="upper_bound_resize"):
+        native, timing = self.predict_canonical(rgb, process_res, process_res_method)
+        metric, calibration = metric_depth_from_canonical(native, input_K, rgb.shape[:2])
+        return native, metric, dict(**timing, metric_conversion=calibration)
+
+    def predict_canonical(self, rgb, process_res=560, process_res_method="upper_bound_resize"):
+        """RGB-only official output, with no assumption about calibrated scale."""
         import torch
         if process_res_method not in {"upper_bound_resize", "lower_bound_resize"}:
             raise ValueError("Crop strategies are disallowed: output must cover the entire RGB/GT field of view")
@@ -207,8 +213,6 @@ class DA3Predictor:
         processed_images = np.asarray(prediction.processed_images)
         if processed_images.shape != (1, *native.shape, 3):
             raise ValueError("Official processed image grid and depth grid disagree")
-        metric, calibration = metric_depth_from_canonical(native, input_K, rgb.shape[:2])
-        return native, metric, dict(seconds=seconds, native_shape=list(native.shape),
-                            metric_conversion=calibration,
+        return native, dict(seconds=seconds, native_shape=list(native.shape),
                             peak_cuda_allocated_bytes=torch.cuda.max_memory_allocated(self.device) if gpu else None,
                             prediction_is_metric=metric_flag(prediction.is_metric))

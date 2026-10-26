@@ -221,3 +221,187 @@ predictions are recorded as failures and cause a nonzero exit status.
 Historical BASE predictions/results remain distinguishable at their original
 locations and commit. They are not results for this Metric-Large protocol. See
 [the detailed protocol](docs/ZERO_SHOT_GUIDE.md) for audit limitations and tests.
+
+## TransCG zero-shot diagnostic (independent of Booster)
+
+This workflow is implemented for **DA3METRIC-LARGE** and does not represent a
+completed TransCG experiment. It uses only local weights and the existing
+`vggtomast3r` environment; it does not install packages, train, download models,
+query online HF revisions, or read Booster data. The DA3 source must remain at
+`3d835ec1a5802d64a8b8b15f817a1ab54809bfe4`. The existing GPU guard expects an
+RTX 4090D. The shared loader verifies the checkpoint architecture and hashes.
+
+On the Linux server, replace `/path/to/TransCG` with the real dataset location:
+
+```bash
+conda activate vggtomast3r
+cd ~/Documents/Projects/ML_pro/ML_project
+export HF_HUB_OFFLINE=1
+
+python scripts/inspect_transcg.py \
+    --data-root /path/to/TransCG
+
+python scripts/run_transcg_zero_shot.py \
+    --data-root /path/to/TransCG \
+    --checkpoint checkpoints/DA3METRIC-LARGE \
+    --scene-start 1 \
+    --scene-end 10 \
+    --camera 1 \
+    --num-samples 20 \
+    --seed 42 \
+    --process-res 560 \
+    --device cuda:0 \
+    --precision bf16 \
+    --output-dir results/transcg_zero_shot
+```
+
+`bash scripts/run_transcg_zero_shot.sh <same arguments>` is an alternative entry
+point. Neither command activates or changes an environment. Both HF and
+Transformers offline mode are forced by the Python runner before model imports.
+A missing local checkpoint is an error, with no remote fallback.
+
+Discovery accepts `<root>/scene1`, `<root>/data/scene1`,
+`<root>/transcg/data/scene1`, and `<root>/transcg/scene1`. Ambiguous roots are
+rejected. This development machine's inspected layout was
+`E:\transcg-data-1\transcg\scene1` through `scene10`; no local dataset path is
+hardcoded. `inspect_transcg.py` is read-only, scans/decode-checks RGB images and
+reports per-scene counts, rejected files, and example depth/mask types and ranges.
+It does not run inference or save a selection.
+
+The default candidate pool contains **every readable `rgb1.png`** recursively
+under the requested scenes, ordered by numeric scene then lexicographic path.
+Depth/mask files and `rgb2.png` cannot enter this pool. A local
+`random.Random(42).sample(pool, 20)` selects 20 distinct images globally without
+replacement. Before model loading, the runner saves their ordered absolute and
+relative paths, scene/frame/camera IDs, RGB sizes and SHA256 hashes in
+`sample_manifest.json`. It prints the counts, seed, and all selected paths.
+Unreadable candidates are recorded in the scan report. Candidate counts are
+readability counts, not official train/test valid-perspective counts; scene
+metadata is not used to silently filter the pool.
+
+Add `--sampling per_scene` to select 2 images from each of the 10 scenes. Other
+sample counts must divide evenly over all requested scenes; insufficient images
+cause an error. `--camera 2` explicitly selects L515 only and requires a separate
+output directory. Cameras are never mixed within a run.
+
+The model loads once, then receives one RGB array per call, using the existing
+official DA3 preprocessing and `torch.inference_mode()`. `upper_bound_resize`
+preserves the full field of view with patch rounding, without cropping. Times
+include official preprocessing, forward and postprocessing, synchronized on the
+GPU; CUDA peak allocated memory includes the resident model. They exclude file
+saving, figures and evaluation, and include first-call warm-up overhead.
+
+### Depth scale, GT and optional evaluation
+
+`canonical_depth.npy` always stores the untouched float32 native network output;
+it is **not labelled metres**. Without confirmed camera intrinsics and their
+pixel grid, inference remains available but the program warns that scale is
+uncalibrated and trustworthy Raw Metric Evaluation is disabled. It creates no
+`metric_depth.npy` or `metrics_summary.json` in that mode.
+
+If genuine `transcg-info` camera intrinsics are available, explicitly confirm
+their camera correspondence and original pixel grid. For example, **only after
+verifying that D435 K belongs to the original 720x1280 RGB grid**, append:
+
+```bash
+    --intrinsics /path/to/transcg/camera_intrinsics/1-camIntrinsics-D435.npy \
+    --intrinsics-shape 720 1280
+```
+
+Use a fresh output directory when enabling calibration. Alternatively, if the
+official `camera_intrinsics/1-camIntrinsics-D435.npy` (or camera 2 equivalent) is
+inside the resolved dataset root, `--intrinsics-shape` alone enables discovery.
+The shape has no guessed default. Missing info files, or an unconfirmed grid,
+leave output canonical; an explicitly supplied missing/invalid K is an error.
+An image that differs from the confirmed grid fails metric conversion. K is
+scaled by the **actual native output width/height**, including patch rounding:
+
+```text
+K_native = diag(W_native/W_rgb, H_native/H_rgb, 1) @ K_rgb
+focal_native = (fx_native + fy_native) / 2
+depth_m = canonical_depth * focal_native / 300
+```
+
+No GT statistics, sensor depths or predicted cameras determine this conversion.
+Calibration source, SHA256, K matrices, dimensions, factor and units are saved.
+
+The [official TransCG layout](https://graspnet.net/transcg) distinguishes
+`depthN.png` (raw sensor depth), `depthN-gt.png` (refined GT), and
+`depthN-gt-mask.png` (transparent objects, nonzero foreground). The
+[official dataset reader](https://github.com/Galaxies99/TransCG/blob/main/datasets/transcg.py)
+and [depth conversion](https://github.com/Galaxies99/TransCG/blob/main/utils/data_preparation.py)
+use **D435 / 1000** and **L515 / 4000** to convert stored depth to metres.
+This reader checks 16-bit GT PNG encoding, spatial correspondence, and binary
+0/1 or 0/255 masks. Missing/unrecognized annotations produce explicit warnings;
+raw sensor depth is never substituted. No GT filling, training normalization,
+range/outlier filtering, or mask resizing is applied.
+
+With calibrated predictions and readable GT, `metrics_summary.json` reports raw
+AbsRel, RMSE and delta1, globally weighted by pixels, with full-image and
+transparent-object regions. Evaluation uses finite positive GT/prediction
+overlap, reports coverage and skipped annotations, and performs no GT scale fit.
+No metrics file is created when no valid overlap exists. This diagnostic samples
+scene1-10 irrespective of official split and does not claim official test scores.
+
+### Outputs, visualization and resume
+
+```text
+results/transcg_zero_shot/
+  sample_manifest.json
+  run_metadata.json
+  inference_summary.json
+  inference_failures.json
+  predictions/sceneN/<stable hashed sample ID>/
+    canonical_depth.npy          # native network grid, uncalibrated
+    metric_depth.npy             # only when calibration is confirmed
+    prediction.json              # input provenance, units, timing, memory, hashes
+    predicted_depth.png          # RGB-size prediction colour image
+    visualization.json           # colour limits, units, annotation warnings
+    failure.json                 # failed attempts; removed on successful retry
+  figures/sample_001.png          # one comparison panel per successful sample
+  contact_sheet.png               # ordered slots for ALL selected samples
+  visualization_summary.json      # panel settings and explicit failures
+  metrics_summary.json            # only valid calibrated prediction/GT overlap
+```
+
+Without GT the panel is RGB | prediction, plus a transparent mask overlay if
+available. With readable GT it is RGB | GT | prediction | absolute error, plus
+the optional mask. Without calibrated predictions the error panel explicitly
+says unavailable, while canonical colours use the prediction's P2/P98 range
+and are labelled **UNCALIBRATED, not metres**. GT still uses metres in its own
+labelled range. Metric GT/prediction share viridis and the same fixed range
+(default 0-2 m); errors use magma (default 0-1 m), only on valid overlap.
+Grey denotes invalid pixels. Saturation affects display only; arrays are intact.
+All panels preserve the RGB aspect ratio. Contact-sheet thumbnails preserve the
+whole comparison and include numbered failed/unavailable slots, with no
+replacement of selected images. Full-size individual panels support edge review.
+
+Review transparent surfaces, background leakage, boundary continuity and scale
+deviation from the actual server predictions. The code assumes no conclusion.
+
+Re-run the **same inference command with `--resume`** after interruption. The
+saved manifest is reused without rescanning/replacing images. Completed samples
+are skipped only after checking RGB hashes, config, array shapes/dtypes and
+checksums. Failed samples without a successful marker are retried. A changed
+selection/config/checkpoint/calibration requires a new output directory; a
+corrupt successful result is reported rather than silently overwritten. Choose
+a new output directory to recompute it. Nonempty foreign output directories are
+rejected, protecting existing Booster metrics. Figures can be regenerated on CPU:
+
+```bash
+python scripts/visualize_transcg.py \
+    --output-dir results/transcg_zero_shot --depth-max 2 --error-max 1
+```
+
+Synthetic tests and syntax checks do not load DA3 or run GPU inference:
+
+```bash
+python -m pytest tests/test_transcg.py tests/test_inference_adapter.py \
+    tests/test_metric_scale.py -q --basetemp .test-tmp-transcg
+python -m compileall -q src scripts tests
+```
+
+Actual checkpoint loading at the pinned DA3 commit, BF16 on RTX 4090D, native
+output dimensions/focal conversion, GPU memory/time, server path permissions,
+real annotation alignment and resulting transparent-object quality still need
+verification on the server. Development did not execute real TransCG inference.
