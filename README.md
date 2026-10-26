@@ -202,6 +202,22 @@ Resume also binds RGB, calibration metadata, config and all three array hashes.
 GT and masks are not resized. Figures use common metre ranges for GT/prediction
 and preserve every numerical output.
 
+To visualize all 76 existing predictions without running inference again:
+
+```bash
+conda run --no-capture-output -n vggtomast3r python scripts/visualize_zero_shot.py \
+  --data-root "$DATA_ROOT" --split train \
+  --output-dir results/zero_shot_metric_large \
+  --depth-min 0 --depth-max 5 --error-max 1 --dpi 200
+```
+
+The default is all selected samples, rather than a five-image preview. Set
+`--max-samples 76` explicitly if desired. Each PNG contains RGB, GT, raw metric
+depth, absolute error, relative error and material overlay. The script also
+writes `visualization_manifest.csv` (sample IDs to PNG paths),
+`visualization_summary.json` and `visualization_failures.json`. Missing or invalid
+predictions are recorded as failures and cause a nonzero exit status.
+
 Historical BASE predictions/results remain distinguishable at their original
 locations and commit. They are not results for this Metric-Large protocol. See
 [the detailed protocol](docs/ZERO_SHOT_GUIDE.md) for audit limitations and tests.
