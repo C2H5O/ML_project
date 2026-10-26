@@ -1,0 +1,18 @@
+# Reference configuration. CLI flags are authoritative; no implicit config loading.
+model_id: depth-anything/DA3METRIC-LARGE
+checkpoint: checkpoints/DA3METRIC-LARGE
+split: real-test
+max_samples: 20
+seed: 42
+process_res: 560
+device: cuda:0
+precision: bf16
+pair_draws: 20000
+gt_gap_m: 0.02
+ring_radius: 30
+boundary_margin: 2
+compression_ratio: 0.25
+depth_max: 2.0
+error_max: 0.5
+offline: true
+output_dir: results/cleargrasp_zero_shot
