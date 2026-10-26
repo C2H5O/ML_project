@@ -106,24 +106,69 @@ def prediction_dir(output, sample):
     return sample_output(output, sample["scene_id"], sample["sample_id"])
 
 
-def load_calibration(root, camera, intrinsics=None, intrinsics_shape=None):
-    explicit = intrinsics is not None
-    path = Path(intrinsics) if explicit else Path(root) / "camera_intrinsics" / INTRINSICS[camera]
-    if path.name in INTRINSICS.values() and path.name != INTRINSICS[camera]:
+def validate_intrinsics(path, camera, image_shape=None):
+    """Validate pixel K, never a pose/rotation. Grid correspondence is declared
+    by the user, then checked against the actual RGB, not inferred from GT.
+    """
+    path = Path(path)
+    if camera not in CAMERAS:
+        raise ValueError("Unknown camera")
+    name = path.name.lower()
+    if (path.name in INTRINSICS.values() and path.name != INTRINSICS[camera] or
+            ("l515" in name and camera != 2) or ("d435" in name and camera != 1)):
         raise ValueError("Intrinsics filename belongs to the other camera")
-    if not path.is_file():
-        if explicit:
+    if any(word in name for word in ("extrinsic", "pose", "t_camera", "rotation")):
+        raise ValueError("Extrinsics/pose cannot be used as intrinsics")
+    K = np.load(path, allow_pickle=False)
+    if (K.dtype.kind not in "fiu" or K.shape != (3, 3) or
+            not np.all(np.isfinite(K))):
+        raise ValueError(f"Expected finite numeric 3x3 intrinsics, got {K.shape}, {K.dtype}")
+    K = K.astype(np.float64)
+    if (not np.allclose(K[2], [0, 0, 1], atol=1e-8) or
+            not np.isclose(K[1, 0], 0, atol=1e-8) or
+            K[0, 0] <= 0 or K[1, 1] <= 0 or
+            np.allclose(K.T @ K, np.eye(3), atol=1e-6)):
+        raise ValueError("Not a calibrated pinhole intrinsics matrix (possibly extrinsics/rotation)")
+    if image_shape is not None:
+        if (len(image_shape) != 2 or any(type(v) is not int or v <= 0 for v in image_shape)):
+            raise ValueError("Intrinsics pixel grid must be positive integer HEIGHT WIDTH")
+        h, w = image_shape
+        if not (0 <= K[0, 2] < w and 0 <= K[1, 2] < h):
+            raise ValueError("Principal point is outside the declared intrinsics pixel grid")
+    return K
+
+
+def calibration_candidates(root, camera):
+    """Recursive discovery of official camera-specific basenames only."""
+    root = Path(root)
+    if not root.is_dir():
+        return []
+    return sorted({p.resolve() for p in root.rglob(INTRINSICS[camera]) if p.is_file()})
+
+
+def load_calibration(root, camera, intrinsics=None, intrinsics_shape=None, calibration_root=None):
+    if intrinsics is not None:
+        path = Path(intrinsics)
+        # Validate known camera mismatch even when the explicit file is absent.
+        if path.name in INTRINSICS.values() and path.name != INTRINSICS[camera]:
+            raise ValueError("Intrinsics filename belongs to the other camera")
+        if not path.is_file():
             raise FileNotFoundError(path)
-        return None
+    else:
+        candidates = calibration_candidates(calibration_root or root, camera)
+        if len(candidates) > 1:
+            raise ValueError(f"Ambiguous calibration files {candidates}; select --intrinsics explicitly")
+        if not candidates:
+            return None
+        path = candidates[0]
+    K = validate_intrinsics(path, camera, intrinsics_shape)
     if intrinsics_shape is None:
-        if explicit:
+        if intrinsics is not None:
             raise ValueError("--intrinsics requires --intrinsics-shape HEIGHT WIDTH")
         return None  # A naked K does not establish its pixel grid.
-    K = np.load(path, allow_pickle=False)
-    # Reuse the existing strict matrix validation without involving any GT.
-    metric_depth_from_canonical(np.ones((1, 1), np.float32), K, intrinsics_shape)
     return dict(K=K.tolist(), image_shape=list(intrinsics_shape), source=str(path.resolve()),
                 sha256=digest_file(path), camera_id=camera,
+                stored_dtype=str(np.load(path, allow_pickle=False).dtype),
                 provenance="user-confirmed corresponding camera intrinsics and pixel grid")
 
 
@@ -147,7 +192,9 @@ def read_annotations(sample, shape):
     mask_path = folder / f"depth{camera}-gt-mask.png"
     info = dict(gt_path=str(gt_path), gt_kind="refined ground truth, not raw sensor depth",
                 gt_units="metres", stored_units_per_metre=1000 if camera == 1 else 4000,
-                mask_definition="nonzero = transparent object; zero = other pixels",
+                mask_definition="nonzero = transparent object; zero = non-transparent/background; NOT GT validity",
+                mask_semantics_source="https://graspnet.net/transcg",
+                depth_units_source="https://github.com/Galaxies99/TransCG/blob/main/utils/data_preparation.py",
                 gt_available=False, mask_available=False, warnings=[])
     gt, mask = None, None
     for path, kind in [(gt_path, "gt"), (mask_path, "mask")]:
@@ -165,12 +212,14 @@ def read_annotations(sample, shape):
                 if mode not in {"I;16", "I;16L", "I;16B", "I"} or array.min() < 0 or array.max() > 65535:
                     raise ValueError("Expected unsigned 16-bit GT PNG encoding")
                 gt = array.astype(np.float32) / info["stored_units_per_metre"]
-                info.update(gt_available=True, gt_dtype=str(array.dtype), gt_sha256=digest_file(path))
+                info.update(gt_available=True, gt_dtype=str(array.dtype), gt_sha256=digest_file(path),
+                            valid_gt_pixels=int((array > 0).sum()))
             else:
                 if not set(np.unique(array)).issubset({0, 1, 255}):
                     raise ValueError("Unrecognized transparent object mask values")
                 mask = array != 0
-                info.update(mask_available=True, mask_sha256=digest_file(path))
+                info.update(mask_available=True, mask_sha256=digest_file(path), mask_dtype=str(array.dtype),
+                            mask_values=[int(v) for v in np.unique(array)], transparent_pixels=int(mask.sum()))
         except Exception as exc:
             info["warnings"].append(f"{kind}: {type(exc).__name__}: {exc}")
     return gt, mask, info

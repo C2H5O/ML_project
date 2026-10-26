@@ -5,12 +5,14 @@ from pathlib import Path
 import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-PATH_FIELDS = {"data_root", "checkpoint", "output_dir", "intrinsics"}
+PATH_FIELDS = {"data_root", "checkpoint", "output_dir", "intrinsics", "calibration_root",
+               "input_dir", "calibrated_output_dir"}
 STRING_FIELDS = PATH_FIELDS | {"sampling", "device", "precision"}
 INT_FIELDS = {"scene_start", "scene_end", "camera", "num_samples", "seed", "process_res"}
 FLOAT_FIELDS = {"depth_max", "error_max"}
-FIELDS = STRING_FIELDS | INT_FIELDS | FLOAT_FIELDS | {"intrinsics_shape", "resume"}
-NULLABLE = {"intrinsics", "intrinsics_shape"}
+BOOL_FIELDS = {"resume", "zoom_regions"}
+FIELDS = STRING_FIELDS | INT_FIELDS | FLOAT_FIELDS | {"intrinsics_shape"} | BOOL_FIELDS
+NULLABLE = {"intrinsics", "intrinsics_shape", "calibration_root"}
 
 
 def load_config(path):
@@ -33,8 +35,8 @@ def load_config(path):
             raise ValueError(f"{key} must be an integer")
         if key in FLOAT_FIELDS and (type(value) not in {int, float} or not math.isfinite(value) or value <= 0):
             raise ValueError(f"{key} must be a finite positive number")
-        if key == "resume" and type(value) is not bool:
-            raise ValueError("resume must be YAML true or false, not a quoted string")
+        if key in BOOL_FIELDS and type(value) is not bool:
+            raise ValueError(f"{key} must be YAML true or false, not a quoted string")
         if key == "intrinsics_shape" and (not isinstance(value, list) or len(value) != 2 or
                 any(type(v) is not int or v <= 0 for v in value)):
             raise ValueError("intrinsics_shape must be null or [positive HEIGHT, positive WIDTH]")
@@ -90,8 +92,8 @@ class TransCGArgumentParser(argparse.ArgumentParser):
                 if key not in actions or value is None:
                     continue
                 option = actions[key].option_strings[0]
-                if key == "resume":
-                    tokens.append("--resume" if value else "--no-resume")
+                if key in BOOL_FIELDS:
+                    tokens.append(option if value else "--no-" + option[2:])
                 else:
                     tokens.append(option)
                     if isinstance(value, list):

@@ -32,6 +32,18 @@ resume: false               # true resumes the same saved manifest/config
 intrinsics: null
 intrinsics_shape: null
 
+# Separate camera-info package on the server. Does not change data_root/RGB paths.
+# Recursively discover exact official camera-specific filenames; ambiguity fails.
+# K alone cannot prove its pixel grid: inspect first, then confirm shape above.
+calibration_root: /public/home/2024141520249/Documents/Projects/ML_pro/data/transcg
+
+# CPU-only calibration of EXISTING canonical predictions (no DA3 inference).
+# Only calibrate_transcg_predictions.py uses calibrated_output_dir; inference and
+# visualize_transcg.py continue to use output_dir. Original input_dir is read-only.
+input_dir: results/transcg_zero_shot
+calibrated_output_dir: results/transcg_metric_calibrated
+zoom_regions: true
+
 # Visualization only. Metric GT/pred share [0, depth_max] metres;
 # absolute error uses [0, error_max] metres. Arrays are never clipped.
 # Canonical predictions use separately labelled per-image P2/P98 limits.

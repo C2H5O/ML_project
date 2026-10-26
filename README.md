@@ -224,6 +224,16 @@ locations and commit. They are not results for this Metric-Large protocol. See
 
 ## TransCG zero-shot diagnostic (independent of Booster)
 
+Already have canonical predictions? Use the **CPU-only calibration workflow**:
+[TransCG existing-prediction calibration guide](docs/TRANSCG_CPU_CALIBRATION.md).
+Run `scripts/inspect_transcg_calibration.py --config configs/transcg_zero_shot.yaml`
+on the server first, then confirm the D435 K path and its original pixel grid.
+`scripts/calibrate_transcg_predictions.py --config configs/transcg_zero_shot.yaml`
+converts the original manifest's saved arrays into a separate
+`results/transcg_metric_calibrated/`, evaluates full/transparent/non-transparent
+regions and regenerates metric/error figures without importing torch or DA3.
+It never reruns inference or changes the original zero-shot directory.
+
 This workflow is implemented for **DA3METRIC-LARGE** and does not represent a
 completed TransCG experiment. It uses only local weights and the existing
 `vggtomast3r` environment; it does not install packages, train, download models,

@@ -34,10 +34,11 @@ def labelled(image, title, width=640):
     return canvas
 
 
-def save_transcg_panel(sample, canonical, metric, path, depth_max=2.0, error_max=1.0):
+def save_transcg_panel(sample, canonical, metric, path, depth_max=2.0, error_max=1.0, zoom_regions=False):
     rgb = read_rgb(sample["path"])
     shape = rgb.shape[:2]
     gt, mask, annotations = read_annotations(sample, shape)
+    error = None
     panels = [labelled(Image.fromarray(rgb), f"{sample['sample_id']}\nRGB input ({sample['camera_name']})")]
     settings = dict(depth_colormap="viridis", error_colormap="magma", invalid_colour="grey",
                     gt_alignment=False, annotations=annotations)
@@ -82,11 +83,32 @@ def save_transcg_panel(sample, canonical, metric, path, depth_max=2.0, error_max
     result.save(path)
     folder = prediction_dir(path.parent.parent, sample)
     prediction_image.save(folder / "predicted_depth.png")
+    if error is not None:
+        colour_depth(error, 0, error_max, "magma").save(folder / "absolute_error.png")
+    if zoom_regions and metric is not None and mask is not None and mask.any():
+        ys, xs = np.nonzero(mask)
+        pad = max(1, round(max(ys.max() - ys.min(), xs.max() - xs.min()) * .08))
+        box = (max(0, int(xs.min()) - pad), max(0, int(ys.min()) - pad),
+               min(shape[1], int(xs.max()) + pad + 1), min(shape[0], int(ys.max()) + pad + 1))
+        crops = [(Image.fromarray(rgb), "RGB | transparent mask bounding box"),
+                 (prediction_image, f"DA3 metric (m): 0 .. {depth_max:g}")]
+        if gt is not None:
+            crops.insert(1, (colour_depth(gt, 0, depth_max), f"Refined GT (m): 0 .. {depth_max:g}"))
+        if error is not None:
+            crops.append((colour_depth(error, 0, error_max, "magma"), f"Absolute error (m): 0 .. {error_max:g}"))
+        crop_panels = [labelled(im.crop(box), title) for im, title in crops]
+        zoom = Image.new("RGB", (sum(p.width for p in crop_panels), max(p.height for p in crop_panels)), "white")
+        for i, crop in enumerate(crop_panels):
+            zoom.paste(crop, (i * 640, 0))
+        zoom_path = path.with_name(path.stem + "_transparent_zoom.png")
+        zoom.save(zoom_path)
+        settings["transparent_zoom"] = dict(path=str(zoom_path), bbox_xyxy=list(box),
+            selection="nonzero transparent mask bounding box with padding; no depth-based ROI selection")
     write_json(folder / "visualization.json", settings)
     return settings
 
 
-def regenerate_figures(output, depth_max=2.0, error_max=1.0):
+def regenerate_figures(output, depth_max=2.0, error_max=1.0, zoom_regions=False):
     """CPU-only render from saved predictions; keep a slot for every selection."""
     output = Path(output)
     manifest = read_json(output / "sample_manifest.json")
@@ -105,7 +127,7 @@ def regenerate_figures(output, depth_max=2.0, error_max=1.0):
                     raise ValueError(f"Prediction checksum mismatch: {name}")
             canonical = np.load(folder / "canonical_depth.npy", allow_pickle=False)
             metric = np.load(folder / "metric_depth.npy", allow_pickle=False) if meta["metric_units"] == "metres" else None
-            settings = save_transcg_panel(sample, canonical, metric, path, depth_max, error_max)
+            settings = save_transcg_panel(sample, canonical, metric, path, depth_max, error_max, zoom_regions)
             with Image.open(path) as panel:
                 tile = ImageOps.contain(panel.convert("RGB"), (1000, 300))
             records.append(dict(sample_id=sample["sample_id"], figure=str(path), **settings))

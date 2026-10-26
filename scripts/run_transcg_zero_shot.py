@@ -33,6 +33,7 @@ def parser():
     p.add_argument("--precision", choices=["bf16", "auto", "fp16", "fp32"], default="bf16")
     p.add_argument("--output-dir", type=Path, default=Path("results/transcg_zero_shot"))
     p.add_argument("--intrinsics", type=Path, help="Trusted camera-specific local 3x3 .npy; never inferred from GT")
+    p.add_argument("--calibration-root", type=Path, help="Independent camera-info root; never changes RGB data-root")
     p.add_argument("--intrinsics-shape", nargs=2, type=positive_int, metavar=("HEIGHT", "WIDTH"),
                    help="Confirmed pixel grid of K, must match original RGB dimensions")
     p.add_argument("--depth-max", type=float, default=2.0, help="Shared GT/metric colour maximum in metres")
@@ -110,7 +111,7 @@ def run(args, predictor_factory=DA3Predictor):
     checkpoint = args.checkpoint.resolve()
     if not checkpoint.is_dir() or not all((checkpoint / n).is_file() for n in ("config.json", "model.safetensors")):
         raise FileNotFoundError("Local --checkpoint must contain config.json and model.safetensors; downloads are disabled")
-    calibration = load_calibration(root, args.camera, args.intrinsics, args.intrinsics_shape)
+    calibration = load_calibration(root, args.camera, args.intrinsics, args.intrinsics_shape, args.calibration_root)
     selection = dict(root=str(root), scene_start=args.scene_start, scene_end=args.scene_end,
         camera=args.camera, num_samples=args.num_samples, seed=args.seed, sampling=args.sampling)
     config = dict(dataset="transcg", protocol_version=1, selection=selection,
