@@ -15,6 +15,7 @@ from src.common import digest_file, protect_dataset, write_json
 
 SPLITS = ('real-test', 'real-val', 'synthetic-test', 'synthetic-val')
 SOURCE = 'https://github.com/Shreeyak/cleargrasp/blob/master/eval_depth_completion/eval_depth_completion.py'
+_opencv_exr_disabled = None
 
 
 def read_rgb(path):
@@ -23,29 +24,49 @@ def read_rgb(path):
 
 
 def exr_capabilities():
-    return {name: importlib.util.find_spec(name) is not None
-            for name in ('OpenEXR', 'Imath', 'cv2')}
+    result = {name: importlib.util.find_spec(name) is not None
+              for name in ('OpenEXR', 'Imath', 'cv2')}
+    result['opencv_exr_disabled_detected'] = _opencv_exr_disabled is not None
+    return result
 
 
 def read_depth(path):
     """Official scalar R channel. Never average RGB channels or auto-scale units."""
+    global _opencv_exr_disabled
     errors = []
     try:
         import OpenEXR
-        import Imath
-        f = OpenEXR.InputFile(str(path))
-        try:
-            dw = f.header()['dataWindow']
-            a = np.frombuffer(f.channel('R', Imath.PixelType(Imath.PixelType.FLOAT)), np.float32)
-            return a.reshape(dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1).copy()
-        finally:
-            f.close()
+        if hasattr(OpenEXR, 'File'):
+            # Modern bindings expose NumPy arrays directly; no Imath dependency.
+            with OpenEXR.File(str(path), separate_channels=True) as f:
+                if len(f.parts) != 1:
+                    raise ValueError('Expected single-part ClearGrasp EXR')
+                a = np.asarray(f.channels()['R'].pixels)
+                if a.ndim != 2 or a.dtype.kind != 'f':
+                    raise ValueError('Expected floating scalar R channel, not deep EXR data')
+                return a.astype(np.float32, copy=True)
+        else:
+            import Imath
+            f = OpenEXR.InputFile(str(path))
+            try:
+                dw = f.header()['dataWindow']
+                a = np.frombuffer(f.channel('R', Imath.PixelType(Imath.PixelType.FLOAT)), np.float32)
+                return a.reshape(dw.max.y - dw.min.y + 1, dw.max.x - dw.min.x + 1).copy()
+            finally:
+                f.close()
     except Exception as exc:
         errors.append(f'OpenEXR: {exc}')
     try:
         # Use only the existing codec configuration; never set environment variables.
         import cv2
-        a = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+        if _opencv_exr_disabled is cv2:
+            raise RuntimeError('OpenCV EXR codec is disabled (previously detected; skipping repeated decoder attempts)')
+        try:
+            a = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+        except Exception as exc:
+            if 'OpenEXR codec is disabled' in str(exc):
+                _opencv_exr_disabled = cv2
+            raise
         if a is None:
             raise ValueError('EXR decoder returned None (check OpenEXR build support)')
         if a.ndim == 3 and a.shape[2] == 3:
@@ -55,7 +76,9 @@ def read_depth(path):
         return a.astype(np.float32)
     except Exception as exc:
         errors.append(f'OpenCV: {exc}')
-    raise RuntimeError('EXR unavailable; inspect existing OpenEXR/Imath or enabled OpenCV codec; '
+    raise RuntimeError('EXR unavailable in this Python environment. Use the OpenEXR Python reader '
+                       '(modern OpenEXR.File, or legacy OpenEXR+Imath) instead of enabling OpenCV '
+                       'through environment variables. Check in the server vggtomast3r environment; '
                        'no environment-variable changes and no automatic installation. ' + '; '.join(errors))
 
 
@@ -226,6 +249,7 @@ def inspect_dataset(root, output):
             except Exception as exc:
                 report['unreadable_files'].append(dict(path=sample['files']['metadata'], error=str(exc)))
         report['records'].append(rec)
+    report['exr_capabilities'] = exr_capabilities()
     write_json(Path(output) / 'sample_manifest.json', manifest)
     write_json(Path(output) / 'dataset_inspection.json', report)
     return report

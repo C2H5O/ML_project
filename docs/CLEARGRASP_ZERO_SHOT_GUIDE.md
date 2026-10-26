@@ -153,32 +153,49 @@ the project's protocol, not an official ClearGrasp benchmark. Val/test and
 real/synthetic are selected separately; nothing trains on these splits.
 Optional boundary error metrics/crops/ordinal error overlays are not implemented.
 
-## Windows inspection and development checks
+## Server EXR dependency and development checks
 
-Use the existing environment; do not install over the server environment:
+The server is the target for real data inspection and DA3 inference. Windows is
+used only for code development and synthetic unit tests; the earlier local data
+inventory is historical evidence. Do not use the Windows inspection config for
+server runs.
 
-```powershell
-cd D:\junior\Intro_ML\Projects\ML_project
-.venv\Scripts\python.exe scripts/inspect_cleargrasp.py `
-  --config configs/cleargrasp_windows.yaml
-
-.venv\Scripts\python.exe -m pytest -q --basetemp .test-tmp-cleargrasp-final
-```
-
-All data/checkpoint/output paths are in YAML. `cleargrasp_windows.yaml` contains the
-actual local data path and uses `results/cleargrasp_windows_inspection`, separate
-from the initial complete inventory. No path is read from an environment variable.
+All data/checkpoint/output paths are in `configs/cleargrasp_zero_shot.yaml`.
+No path is read from an environment variable.
 The path CLI flags `--data-root`, `--checkpoint` and `--output-dir` are rejected;
 edit the YAML instead. `--config` selects the file.
 
-EXR backends: existing OpenEXR+Imath first, then existing OpenCV only if its EXR
-codec is already enabled by its build/runtime configuration. OpenCV BGR selects R,
-not B. The code never sets environment variables, enables a codec via an environment
-switch, downloads imageio plugins or installs packages. The current Windows `.venv`
-has no OpenEXR+Imath and its OpenCV EXR codec is disabled by default; the current
-reader therefore reports an explicit dependency failure for these files. The
-previous complete inventory and annotation preview remain historical evidence,
-not a claim that the new reader can decode them in the current Windows environment.
+EXR backends: modern `OpenEXR.File(..., separate_channels=True)` first (direct NumPy
+R channel, no Imath import); older bindings use `OpenEXR.InputFile` with Imath.
+OpenCV is a fallback only if its EXR codec is already enabled by its build/runtime
+configuration. OpenCV BGR selects R, not B. After OpenCV reports a disabled codec,
+that backend is not retried for every image in the same process. This prevents
+repeated native warnings; individual unreadable files are still recorded, and no
+zero/fake GT is substituted. `opencv_exr_disabled_detected` in the inspection JSON
+records the failure.
+
+The code never sets environment variables, enables a codec via an environment
+switch, downloads imageio plugins or installs packages. On the server, diagnose
+the existing Conda environment first:
+
+```bash
+conda activate vggtomast3r
+python -m pip show OpenEXR
+python -c "import OpenEXR; print(OpenEXR.__version__); print('modern API:', hasattr(OpenEXR, 'File'))"
+```
+
+If OpenEXR is absent, the targeted manual dependency installation, if desired, is:
+
+```bash
+python -m pip install --only-binary=:all: --no-deps OpenEXR
+```
+
+This command targets the active interpreter and installs only the OpenEXR wheel;
+it does not upgrade PyTorch or create a Conda environment. It is not executed by
+any project script. Modern bindings do not require a separate Imath install for
+this reader. No OpenCV rebuild or environment-variable switch is needed when
+OpenEXR succeeds. See the [OpenEXR Python documentation](https://openexr.com/en/latest/python.html).
+
 If decoding is unavailable on Linux, inspection still writes JSON with individual
 errors and exits nonzero. Inspect imports/build support in the existing environment
 and resolve dependencies explicitly; no Torch upgrade or new Conda environment.
@@ -201,6 +218,11 @@ RGB, nonzero-mask overlays and opaque GT only, with no model prediction. The sam
 overlays cover the transparent objects; GT holes remain visible. This is not a
 claim of perfect registration across the entire dataset. The Linux Bash wrapper
 and real GPU inference have not been executed locally.
+
+EXR-reader compatibility regression: 43 ClearGrasp/relative-geometry tests passed,
+including modern R-channel reads without Imath, legacy API compatibility, and
+disabled-OpenCV retry suppression. These are synthetic/mock tests, not server
+dependency or GPU verification.
 
 ## Linux smoke test
 

@@ -254,3 +254,65 @@ def test_exr_reader_does_not_change_environment(tmp_path, monkeypatch):
     before = dict(os.environ)
     data.read_depth(tmp_path/'depth.exr')
     assert dict(os.environ) == before
+
+
+def test_modern_openexr_reads_r_without_imath(tmp_path, monkeypatch):
+    expected = np.array([[1., 2., 0.], [np.nan, 4., np.inf]], np.float16)
+    seen = []
+    class File:
+        parts = [object()]
+        def __init__(self, path, separate_channels):
+            seen.append((path, separate_channels))
+        def __enter__(self):
+            return self
+        def __exit__(self, *args):
+            return False
+        def channels(self):
+            return {'R': types.SimpleNamespace(pixels=expected),
+                    'B': types.SimpleNamespace(pixels=np.full(expected.shape, 99))}
+    monkeypatch.setitem(sys.modules, 'OpenEXR', types.SimpleNamespace(File=File))
+    monkeypatch.setitem(sys.modules, 'Imath', None)
+    before = dict(os.environ)
+    result = data.read_depth(tmp_path/'test.exr')
+    np.testing.assert_equal(result, expected.astype(np.float32))
+    assert result.dtype == np.float32 and seen[0][1] is True
+    assert dict(os.environ) == before
+
+
+def test_legacy_openexr_reader_still_supported(tmp_path, monkeypatch):
+    expected = np.arange(6, dtype=np.float32).reshape(2, 3)
+    closed = []
+    class InputFile:
+        def __init__(self, path):
+            pass
+        def header(self):
+            return {'dataWindow': types.SimpleNamespace(min=types.SimpleNamespace(x=0,y=0),
+                                                        max=types.SimpleNamespace(x=2,y=1))}
+        def channel(self, name, pixel_type):
+            assert name == 'R'
+            return expected.tobytes()
+        def close(self):
+            closed.append(True)
+    class PixelType:
+        FLOAT = 2
+        def __init__(self, value):
+            pass
+    monkeypatch.setitem(sys.modules, 'OpenEXR', types.SimpleNamespace(InputFile=InputFile))
+    monkeypatch.setitem(sys.modules, 'Imath', types.SimpleNamespace(PixelType=PixelType))
+    np.testing.assert_array_equal(data.read_depth(tmp_path/'test.exr'), expected)
+    assert closed == [True]
+
+
+def test_disabled_opencv_is_not_retried_for_every_file(tmp_path, monkeypatch):
+    calls = []
+    def disabled(*args):
+        calls.append(args)
+        raise RuntimeError('imgcodecs: OpenEXR codec is disabled')
+    backend = types.SimpleNamespace(IMREAD_UNCHANGED=-1, imread=disabled)
+    monkeypatch.setitem(sys.modules, 'OpenEXR', None)
+    monkeypatch.setitem(sys.modules, 'cv2', backend)
+    monkeypatch.setattr(data, '_opencv_exr_disabled', None)
+    for name in ('one.exr', 'two.exr'):
+        with pytest.raises(RuntimeError, match='server vggtomast3r'):
+            data.read_depth(tmp_path/name)
+    assert len(calls) == 1
