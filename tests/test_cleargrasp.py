@@ -148,7 +148,13 @@ def test_offline_pipeline_resume_evaluation_and_figures(tmp_path, monkeypatch):
     assert read_json(output/'metrics/raw_metric_summary.json')['regions']['full_image']['AbsRel'] == 0
     assert visualize_saved(output) == []
     assert (output/'contact_sheet.png').is_file()
-    assert len(list((output/'figures').rglob('*.png'))) == 16
+    assert len(list((output/'figures').rglob('*.png'))) == 20
+    exported = next((output/'figures').rglob('predicted_depth.png'))
+    with Image.open(exported) as im:
+        assert im.size == (15, 10)  # Native model grid, not a resized GT image.
+    settings = read_json(exported.parent/'visualization.json')
+    assert settings['depth_colormap'] == 'viridis'
+    assert settings['gt_alignment_for_raw_metric'] is False
     args.process_res = 448
     with pytest.raises(ValueError, match='differs'):
         module.run(args)
@@ -390,3 +396,18 @@ def test_smoke_requires_exactly_20_available_samples(tmp_path):
         args = module.parser().parse_args(['--config', str(config), '--smoke-test'])
         with pytest.raises(ValueError, match='requires 20 unique RGB samples'):
             module.run(args)
+
+
+def test_prediction_display_is_independent_of_gt_holes():
+    from src.visualization.cleargrasp import depth_display_arrays
+    gt = np.array([[0., np.nan, 2.], [np.inf, 3., 4.]])
+    pred = np.array([[1., 2., 3.], [4., 0., np.nan]])
+    original = pred.copy()
+    displays = depth_display_arrays(gt, pred)
+    np.testing.assert_equal(displays['raw_metric'], [[1., 2., 3.], [4., np.nan, np.nan]])
+    assert np.isnan(displays['gt'][0, 0])
+    assert np.isnan(displays['raw_error'][0, 0])
+    assert displays['raw_error'][0, 2] == 1.
+    assert np.isfinite(displays['oracle_depth'][0, 0])
+    assert np.isnan(displays['oracle_error'][0, 0])
+    np.testing.assert_equal(pred, original)

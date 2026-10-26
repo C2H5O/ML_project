@@ -319,10 +319,42 @@ After smoke completion, inspect `inference_failures.json`,
 `metrics/evaluation_failures.json`, timing/VRAM and figures. Verify calibration
 metadata, GT registration, fixed depth colour ranges and local pair coverage.
 Colour saturation above a chosen maximum is explicitly shown by extended colourbars.
-GT-invalid locations are grey in GT/prediction/error depth panels. All samples use
+GT-invalid locations are grey in GT/error panels. Predicted depth is displayed
+using only finite positive prediction validity, independently of GT holes. It
+must never inherit the sensor GT's missing-data silhouette. All samples use
 the same configured metre ranges; missing metric calibration is visibly unavailable.
 Aligned panels are labeled diagnostic only. Seven individual panels plus one
 comparison image are saved per image, and `contact_sheet.png` covers the run.
+Depth panels use `viridis` and errors use `magma`, matching the previous
+Booster/TransCG rendering. Raster panels use nearest display interpolation. No
+sharpening, edge enhancement or per-image normalization is applied. Fixed colour
+limits may saturate values above `depth_max`; per-sample `visualization.json`
+records this count and the display protocol.
+
+Each calibrated sample additionally exports two borderless images under its
+`figures/<split>/<sample-hash>/` directory:
+
+- `predicted_depth.png`: complete prediction at the saved native network grid,
+  with no GT mask and no spatial resize. Uses the existing TransCG colouring
+  helper with the configured fixed metre range.
+- `predicted_depth_rgb_grid.png`: the same complete prediction after the existing
+  bilinear resize to the RGB grid. It is not masked by GT either.
+
+The original ClearGrasp visualization applied GT validity to the prediction panel
+and used `turbo`. This could make sensor holes appear to be prediction holes.
+The corrected display changes neither saved NPY predictions nor evaluation masks,
+so existing raw/relative metrics do not need recomputation for this fix. To redraw
+saved server predictions only, with no model loading or GPU inference:
+
+```bash
+conda run --no-capture-output -n vggtomast3r \
+  python scripts/visualize_cleargrasp.py --config configs/cleargrasp_zero_shot.yaml
+```
+
+The configuration must point to the existing run's output directory. The display
+fix passed 47 related tests, including preserving valid prediction pixels inside
+GT holes and exporting the native prediction grid without resizing. A synthetic
+render was visually checked; actual server predictions still need to be redrawn.
 
 Only after reviewing a successful smoke test, set these values in the YAML (or
 in a separate copy selected with `--config`) for the complete real test split:
@@ -371,7 +403,9 @@ resistant; the original sample ID is stored in both manifest and prediction JSON
 `metrics/` contains raw JSON/CSV, relative summary JSON, relative per-image JSON/CSV,
 scale diagnostics CSV, evaluation failures and `summary.md`. Figures have seven
 standalone PNGs plus comparison PNG per sample; the root has a contact sheet and
-visualization summary. JSON uses null/unavailable rather than NaN or invented data.
+visualization summary. Calibrated samples also have two complete borderless
+prediction PNGs and per-sample display metadata. JSON uses null/unavailable rather
+than NaN or invented data.
 
 Still requiring server verification: real checkpoint loading with the pinned
 official source; BF16 single-image output and actual native dimensions; CUDA timing
