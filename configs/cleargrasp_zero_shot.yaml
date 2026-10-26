@@ -1,8 +1,13 @@
-# Reference configuration. CLI flags are authoritative; no implicit config loading.
+# Shared configuration for inspection, inference, evaluation and visualization.
+# Edit data_root after uploading the dataset to Linux. Do not use environment variables.
+# Relative paths resolve against ML_project/, independent of the caller's CWD.
+# python scripts/run_cleargrasp_zero_shot.py --config configs/cleargrasp_zero_shot.yaml
+data_root: null  # REQUIRED: replace with the actual absolute Linux dataset path
 model_id: depth-anything/DA3METRIC-LARGE
 checkpoint: checkpoints/DA3METRIC-LARGE
 split: real-test
 max_samples: 20
+all: false  # For the complete real-test run, set true and choose a new output_dir.
 seed: 42
 process_res: 560
 device: cuda:0
@@ -15,4 +20,6 @@ compression_ratio: 0.25
 depth_max: 2.0
 error_max: 0.5
 offline: true
-output_dir: results/cleargrasp_zero_shot
+output_dir: results/cleargrasp_smoke
+skip_evaluation: false
+skip_visualization: false

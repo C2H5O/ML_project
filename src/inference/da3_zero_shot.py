@@ -136,7 +136,8 @@ class DA3Predictor:
             if not checkpoint:
                 from huggingface_hub import HfApi
                 resolved_revision = HfApi().model_info(model_id, revision=revision or "main").sha
-            self.model = DepthAnything3.from_pretrained(source, **({"revision": resolved_revision} if not checkpoint else {}))
+            self.model = DepthAnything3.from_pretrained(source, **(
+                {"revision": resolved_revision} if not checkpoint else {"local_files_only": True}))
         except Exception as exc:
             raise RuntimeError(f"Cannot load official {model_id}; check checkpoint, network, HF cache and revision: {exc}") from exc
         expected = model_id.rsplit('/', 1)[1].lower()

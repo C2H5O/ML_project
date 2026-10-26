@@ -4,7 +4,6 @@ Sources: Shreeyak/cleargrasp eval_depth_completion/eval_depth_completion.py
 and api/utils.py (R channel, metres, finite positive GT, nonzero eval mask).
 """
 import importlib.util
-import os
 import random
 from pathlib import Path
 
@@ -44,8 +43,7 @@ def read_depth(path):
     except Exception as exc:
         errors.append(f'OpenEXR: {exc}')
     try:
-        # Must precede importing cv2; does not install/upgrade any dependency.
-        os.environ.setdefault('OPENCV_IO_ENABLE_OPENEXR', '1')
+        # Use only the existing codec configuration; never set environment variables.
         import cv2
         a = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
         if a is None:
@@ -57,7 +55,8 @@ def read_depth(path):
         return a.astype(np.float32)
     except Exception as exc:
         errors.append(f'OpenCV: {exc}')
-    raise RuntimeError('EXR unavailable; inspect existing environment, no automatic installation. ' + '; '.join(errors))
+    raise RuntimeError('EXR unavailable; inspect existing OpenEXR/Imath or enabled OpenCV codec; '
+                       'no environment-variable changes and no automatic installation. ' + '; '.join(errors))
 
 
 def read_mask(path, shape=None):

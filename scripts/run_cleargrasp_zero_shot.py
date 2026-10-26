@@ -1,6 +1,4 @@
 """Offline RGB-only single-image inference. Run only on the intended server."""
-import argparse
-import os
 from pathlib import Path
 import _bootstrap
 from src.common import (read_json, write_json, write_npy, digest_file, sample_output,
@@ -10,13 +8,12 @@ from src.datasets.cleargrasp import (SPLITS, discover, select_samples, calibrati
 from src.inference.da3_zero_shot import DA3Predictor, metric_depth_from_canonical, DA3_COMMIT
 from src.evaluation.cleargrasp import saved_prediction, evaluate_saved
 from src.visualization.cleargrasp import visualize_saved
+from src.cleargrasp_config import ClearGraspArgumentParser, print_config
 from evaluate_cleargrasp import protocol_arguments
 
 
 def parser():
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--data-root', required=True, type=Path)
-    p.add_argument('--checkpoint', type=Path, default=Path('checkpoints/DA3METRIC-LARGE'))
+    p = ClearGraspArgumentParser(description=__doc__, required_paths=('data_root', 'checkpoint', 'output_dir'))
     p.add_argument('--split', choices=SPLITS, default='real-test')
     g = p.add_mutually_exclusive_group()
     g.add_argument('--max-samples', type=positive_int, default=20)
@@ -24,20 +21,15 @@ def parser():
     p.add_argument('--process-res', type=positive_int, default=560)
     p.add_argument('--device', default='cuda:0')
     p.add_argument('--precision', choices=('bf16', 'fp16', 'fp32'), default='bf16')
-    p.add_argument('--output-dir', type=Path, default=Path('results/cleargrasp_zero_shot'))
     p.add_argument('--depth-max', type=float, default=2.)
     p.add_argument('--error-max', type=float, default=0.5)
     p.add_argument('--skip-evaluation', action='store_true')
     p.add_argument('--skip-visualization', action='store_true')
-    p.add_argument('--print-config', action='store_true', help='Print options without importing torch/loading data/model')
     protocol_arguments(p)
     return p
 
 
 def run(args):
-    os.environ['HF_HUB_OFFLINE'] = '1'
-    os.environ['TRANSFORMERS_OFFLINE'] = '1'
-    os.environ['HF_DATASETS_OFFLINE'] = '1'
     protect_dataset(args.data_root, args.output_dir)
     checkpoint = args.checkpoint.resolve()
     names = ('config.json', 'model.safetensors')
@@ -139,7 +131,6 @@ def run(args):
 if __name__ == '__main__':
     a = parser().parse_args()
     if a.print_config:
-        import json
-        print(json.dumps(vars(a), indent=2, default=str))
+        print_config(a)
     else:
         raise SystemExit(run(a))

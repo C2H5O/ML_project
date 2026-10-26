@@ -38,8 +38,10 @@ Root: `E:\cleargrasp-dataset-test-val\cleargrasp-dataset-test-val`.
 | synthetic-test | 408 | glass-round-potion-test: 109; glass-square-potion-test: 94; star-bath-bomb-test: 98; tree-bath-bomb-test: 107 | 576 x 1024 |
 | synthetic-val | 532 | cup-with-waves-val: 100; flower-bath-bomb-val: 100; heart-bath-bomb-val: 100; square-plastic-bottle-val: 115; stemless-plastic-champagne-glass-val: 117 | 576 x 1024; 1080 x 1920 |
 
-All 1,226 RGB/GT/mask triplets were inspected with the existing repository
-`.venv` using OpenCV EXR decoding. Missing required GT/masks: 0; orphan annotations:
+All 1,226 RGB/GT/mask triplets were inspected in the initial development version
+with the existing repository `.venv` using OpenCV EXR decoding. That inventory used
+the former runtime codec switch. The current version never changes environment
+variables; see the EXR backend limitation below. Missing required GT/masks: 0; orphan annotations:
 0; unreadable files: 0; dimension mismatches: 0. RGB is JPG uint8, GT is EXR decoded
 as float32, masks are PNG uint8 with values 0/255. Finite-positive GT fractions:
 real-test 0.682852 to 0.936739; real-val 0.496245 to 0.998245; synthetic splits 1.0.
@@ -104,7 +106,8 @@ original K, output K, actual focal, multiplier, shapes, YAML SHA256 and the
 
 ## Relative geometry definitions
 
-All thresholds are fixed CLI options and saved with results. Defaults:
+All thresholds are configured in YAML and saved with results. Non-path CLI options
+may override them. Defaults:
 seed 42; 20,000 candidate pair draws per image/comparison; GT gap strictly greater
 than 0.02 m; local radius 30 pixels; boundary margin 2 pixels; compression ratio 0.25.
 Spatial parameters refer to original RGB/GT pixels; datasets with different
@@ -157,16 +160,25 @@ Use the existing environment; do not install over the server environment:
 ```powershell
 cd D:\junior\Intro_ML\Projects\ML_project
 .venv\Scripts\python.exe scripts/inspect_cleargrasp.py `
-  --data-root 'E:\cleargrasp-dataset-test-val\cleargrasp-dataset-test-val' `
-  --output-dir results/cleargrasp_local_inspection
+  --config configs/cleargrasp_windows.yaml
 
 .venv\Scripts\python.exe -m pytest -q --basetemp .test-tmp-cleargrasp-final
 ```
 
-EXR backends: existing OpenEXR+Imath first, then existing OpenCV with
-`OPENCV_IO_ENABLE_OPENEXR=1`. OpenCV BGR selects R, not B. No imageio download or
-package installation occurs. The system Python initially lacked all EXR backends;
-the existing `.venv` was subsequently confirmed to decode all local EXRs.
+All data/checkpoint/output paths are in YAML. `cleargrasp_windows.yaml` contains the
+actual local data path and uses `results/cleargrasp_windows_inspection`, separate
+from the initial complete inventory. No path is read from an environment variable.
+The path CLI flags `--data-root`, `--checkpoint` and `--output-dir` are rejected;
+edit the YAML instead. `--config` selects the file.
+
+EXR backends: existing OpenEXR+Imath first, then existing OpenCV only if its EXR
+codec is already enabled by its build/runtime configuration. OpenCV BGR selects R,
+not B. The code never sets environment variables, enables a codec via an environment
+switch, downloads imageio plugins or installs packages. The current Windows `.venv`
+has no OpenEXR+Imath and its OpenCV EXR codec is disabled by default; the current
+reader therefore reports an explicit dependency failure for these files. The
+previous complete inventory and annotation preview remain historical evidence,
+not a claim that the new reader can decode them in the current Windows environment.
 If decoding is unavailable on Linux, inspection still writes JSON with individual
 errors and exits nonzero. Inspect imports/build support in the existing environment
 and resolve dependencies explicitly; no Torch upgrade or new Conda environment.
@@ -177,9 +189,11 @@ Tests use small generated images/depth arrays and a fake predictor, including
 offline/resume behavior and visualization. Fake outputs are only test fixtures.
 They are not ClearGrasp inference results.
 
-Development verification on 2026-10-26: the existing `.venv` full suite completed
-with **113 passed**, plus 16 Matplotlib/PyParsing deprecation warnings. New ClearGrasp
-and relative geometry tests account for 20 cases. Python compile checks and CLI
+Configuration-refactor verification on 2026-10-26: the existing `.venv` full suite
+completed with **133 passed**, plus 16 Matplotlib/PyParsing deprecation warnings.
+ClearGrasp and relative geometry tests account for 40 cases, including shared YAML
+entrypoints, path resolution, invalid values, forbidden path overrides and
+preservation of process environment variables. Python compile checks and CLI
 help/config parsing succeeded. Synthetic seven-panel figures were rendered and
 visually checked. A separate read-only three-row real annotation preview is saved
 as `results/cleargrasp_local_inspection/dataset_registration_preview.png`; it contains
@@ -194,29 +208,47 @@ Use the existing server environment, official DA3 source commit
 `3d835ec1a5802d64a8b8b15f817a1ab54809bfe4` and local checkpoint directory. The
 existing predictor validates source provenance, architecture, runtime versions,
 precision and RTX 4090D. One lazily initialized predictor handles independent RGB
-calls; metadata preserves timing/peak allocated VRAM per image. No training.
+calls; metadata preserves timing/peak allocated VRAM per image. Local checkpoint
+loading explicitly passes `local_files_only=True` to the official Hub mixin,
+without setting any offline environment variables. No training.
+
+Before running, edit `configs/cleargrasp_zero_shot.yaml`:
+
+```yaml
+# Replace null with the actual Linux path after uploading; it is not guessed.
+data_root: null
+checkpoint: checkpoints/DA3METRIC-LARGE
+output_dir: results/cleargrasp_smoke
+split: real-test
+max_samples: 20
+all: false
+seed: 42
+process_res: 560
+device: cuda:0
+precision: bf16
+offline: true
+```
+
+The checked-in file contains all evaluation and visualization parameters too.
+Relative YAML paths resolve against the repository root, independent of CWD.
+Environment-variable substitutions in YAML paths are rejected. An unset `data_root`
+fails with a clear message before data/model access. The fixed model and offline
+policy are validated; unknown keys, invalid types and out-of-range values fail early.
 
 ```bash
 conda activate vggtomast3r
 cd ~/Documents/Projects/ML_pro/ML_project
-export HF_HUB_OFFLINE=1
-export TRANSFORMERS_OFFLINE=1
-export CLEARGRASP_ROOT=/path/to/cleargrasp-dataset-test-val
 
 python scripts/inspect_cleargrasp.py \
-  --data-root "$CLEARGRASP_ROOT" \
-  --output-dir results/cleargrasp_smoke
+  --config configs/cleargrasp_zero_shot.yaml
 
 python scripts/run_cleargrasp_zero_shot.py \
-  --data-root "$CLEARGRASP_ROOT" \
-  --checkpoint checkpoints/DA3METRIC-LARGE \
-  --split real-test --max-samples 20 --seed 42 \
-  --process-res 560 --device cuda:0 --precision bf16 \
-  --output-dir results/cleargrasp_smoke
+  --config configs/cleargrasp_zero_shot.yaml
 ```
 
-Or after inspection: `bash scripts/run_cleargrasp_zero_shot.sh` (same smoke defaults;
-extra CLI arguments are forwarded). Use a new output directory if changing inputs,
+Or after inspection: `bash scripts/run_cleargrasp_zero_shot.sh --config configs/cleargrasp_zero_shot.yaml`.
+The wrapper only forwards arguments; it sets no environment variables and carries
+no data/checkpoint/output paths. Set a new output directory in YAML if changing inputs,
 selection, checkpoint bytes, process resolution, device or precision. Resume is
 automatic for exactly matching configurations with valid output checksums. Partial
 NPYs lacking `prediction.json` are regenerated. Completed but corrupt outputs are
@@ -234,18 +266,23 @@ the same configured metre ranges; missing metric calibration is visibly unavaila
 Aligned panels are labeled diagnostic only. Seven individual panels plus one
 comparison image are saved per image, and `contact_sheet.png` covers the run.
 
-Only after reviewing a successful smoke test, run the complete real test split:
+Only after reviewing a successful smoke test, set these values in the YAML (or
+in a separate copy selected with `--config`) for the complete real test split:
+
+```yaml
+split: real-test
+all: true
+output_dir: results/cleargrasp_real_test
+```
+
+`max_samples` remains the smoke limit and is ignored when `all: true`.
 
 ```bash
 python scripts/inspect_cleargrasp.py \
-  --data-root "$CLEARGRASP_ROOT" --output-dir results/cleargrasp_real_test
+  --config configs/cleargrasp_zero_shot.yaml
 
 python scripts/run_cleargrasp_zero_shot.py \
-  --data-root "$CLEARGRASP_ROOT" \
-  --checkpoint checkpoints/DA3METRIC-LARGE \
-  --split real-test --all --seed 42 \
-  --process-res 560 --device cuda:0 --precision bf16 \
-  --output-dir results/cleargrasp_real_test
+  --config configs/cleargrasp_zero_shot.yaml
 ```
 
 `--all` and `--max-samples` are mutually exclusive. The default is 20 samples;
@@ -254,18 +291,17 @@ split names are supported. Standalone CPU reevaluation/replotting needs no model
 
 ```bash
 python scripts/evaluate_cleargrasp.py \
-  --output-dir results/cleargrasp_smoke --data-root "$CLEARGRASP_ROOT" \
-  --seed 42 --pair-draws 20000 --gt-gap-m 0.02 \
-  --ring-radius 30 --boundary-margin 2 --compression-ratio 0.25
+  --config configs/cleargrasp_zero_shot.yaml
 
 python scripts/visualize_cleargrasp.py \
-  --output-dir results/cleargrasp_smoke --data-root "$CLEARGRASP_ROOT" \
-  --depth-max 2.0 --error-max 0.5
+  --config configs/cleargrasp_zero_shot.yaml
 ```
 
-The YAML file is a documented reference matching CLI defaults, not an implicitly
-loaded config. CLI flags are authoritative. `--print-config` prints parsed runner
-options without touching data/checkpoints or importing Torch.
+All four commands load the same YAML by default, or the file selected by `--config`.
+Standalone evaluation and visualization use the configured `output_dir`; choose
+the YAML for the run you intend to inspect. Non-path CLI options can override YAML;
+path options cannot. `--print-config` prints resolved options without touching
+data/checkpoints or importing Torch, including an unresolved `data_root: null`.
 
 ## Output and remaining validation
 

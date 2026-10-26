@@ -1,13 +1,14 @@
 """Inspect all paired files, without model imports or dataset writes."""
-import argparse
 import _bootstrap
 from src.datasets.cleargrasp import inspect_dataset
+from src.cleargrasp_config import ClearGraspArgumentParser, print_config
 
 def main():
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--data-root', required=True)
-    p.add_argument('--output-dir', default='results/cleargrasp_zero_shot')
+    p = ClearGraspArgumentParser(description=__doc__)
     a = p.parse_args()
+    if a.print_config:
+        print_config(a)
+        return 0
     r = inspect_dataset(a.data_root, a.output_dir)
     print(r['data_root'])
     for name, info in r['splits'].items():

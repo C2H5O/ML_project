@@ -1,6 +1,6 @@
-import argparse
 import _bootstrap
 from src.evaluation.cleargrasp import evaluate_saved
+from src.cleargrasp_config import ClearGraspArgumentParser, print_config
 
 def protocol_arguments(p):
     p.add_argument('--seed', type=int, default=42)
@@ -11,12 +11,15 @@ def protocol_arguments(p):
     p.add_argument('--compression-ratio', type=float, default=0.25)
 
 def main():
-    p = argparse.ArgumentParser(description='CPU evaluation of saved ClearGrasp predictions')
-    p.add_argument('--output-dir', required=True)
-    p.add_argument('--data-root', help='Override original root after moving data to another host')
+    p = ClearGraspArgumentParser(description='CPU evaluation of saved ClearGrasp predictions')
     protocol_arguments(p)
-    a = vars(p.parse_args())
-    failures = evaluate_saved(a.pop('output_dir'), **a)
+    a = p.parse_args()
+    if a.print_config:
+        print_config(a)
+        return 0
+    failures = evaluate_saved(a.output_dir, data_root=a.data_root, seed=a.seed,
+        pair_draws=a.pair_draws, gt_gap_m=a.gt_gap_m, ring_radius=a.ring_radius,
+        boundary_margin=a.boundary_margin, compression_ratio=a.compression_ratio)
     print('Evaluation failures:', len(failures))
     return bool(failures)
 

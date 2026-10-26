@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import types
+import os
 import numpy as np
 from PIL import Image
 import pytest
@@ -124,6 +125,7 @@ def test_offline_pipeline_resume_evaluation_and_figures(tmp_path, monkeypatch):
         (checkpoint/n).write_bytes(b'test fixture only')
     module = load_runner()
     calls = []
+    environment_before = dict(os.environ)
     class Predictor:
         metadata = dict(test_fixture=True)
         def __init__(self, **kwargs):
@@ -134,9 +136,12 @@ def test_offline_pipeline_resume_evaluation_and_figures(tmp_path, monkeypatch):
             return np.ones((10, 15), np.float32), dict(seconds=.01, peak_cuda_allocated_bytes=0)
     monkeypatch.setattr(module, 'DA3Predictor', Predictor)
     monkeypatch.setattr(data, 'read_depth', lambda p: np.ones((20, 30), np.float32))
-    args = module.parser().parse_args(['--data-root', str(root), '--checkpoint', str(checkpoint),
-        '--output-dir', str(output), '--all', '--skip-visualization', '--pair-draws', '100'])
+    config = tmp_path/'run.yaml'
+    config.write_text(yaml.safe_dump(dict(data_root=str(root), checkpoint=str(checkpoint),
+        output_dir=str(output), all=True, skip_visualization=True, pair_draws=100)))
+    args = module.parser().parse_args(['--config', str(config)])
     assert module.run(args) == 0
+    assert dict(os.environ) == environment_before
     assert calls == ['init', 'predict', 'predict']
     assert module.run(args) == 0
     assert calls == ['init', 'predict', 'predict']
@@ -166,3 +171,86 @@ def test_canonical_only_never_reports_raw_metric(tmp_path, monkeypatch):
     assert raw['regions']['full_image']['AbsRel'] is None
     relative = read_json(out/'metrics/relative_geometry_summary.json')
     assert relative['regions']['full_image']['oracle_absrel'] == 0
+
+
+def test_shared_config_paths_independent_of_cwd(tmp_path, monkeypatch):
+    from src.cleargrasp_config import PROJECT_ROOT
+    module = load_runner()
+    config = tmp_path/'paths.yaml'
+    config.write_text(yaml.safe_dump(dict(data_root='data/cleargrasp', checkpoint='checkpoints/DA3METRIC-LARGE',
+        output_dir='results/cleargrasp_test', process_res=448, all=True)))
+    monkeypatch.chdir(tmp_path)
+    args = module.parser().parse_args(['--config', str(config), '--process-res', '560', '--max-samples', '3'])
+    assert args.data_root == PROJECT_ROOT/'data/cleargrasp'
+    assert args.checkpoint == PROJECT_ROOT/'checkpoints/DA3METRIC-LARGE'
+    assert args.output_dir == PROJECT_ROOT/'results/cleargrasp_test'
+    assert args.process_res == 560 and args.max_samples == 3 and not args.all
+
+
+@pytest.mark.parametrize('updates', [dict(unknown_key=1), dict(offline=False), dict(all='false'),
+    dict(max_samples=0), dict(seed=True), dict(gt_gap_m=float('nan')), dict(precision='bad'),
+    dict(data_root='$CLEARGRASP_ROOT'), dict(data_root='%CLEARGRASP_ROOT%'),
+    dict(compression_ratio=1.), dict(boundary_margin=30)])
+def test_invalid_config_rejected(tmp_path, updates):
+    from src.cleargrasp_config import load_config
+    config = tmp_path/'bad.yaml'
+    config.write_text(yaml.safe_dump(dict(data_root=str(tmp_path), checkpoint='checkpoints/local',
+        output_dir='results/test', **{k:v for k,v in updates.items() if k not in ('data_root',)})))
+    if 'data_root' in updates:
+        config.write_text(yaml.safe_dump(updates))
+    with pytest.raises(ValueError):
+        load_config(config)
+
+
+@pytest.mark.parametrize('option', ['--data-root', '--checkpoint', '--output-dir'])
+def test_paths_cannot_be_overridden_on_cli(tmp_path, option):
+    module = load_runner()
+    config = tmp_path/'paths.yaml'
+    config.write_text(yaml.safe_dump(dict(data_root=str(tmp_path), checkpoint='checkpoints/local',
+                                         output_dir='results/test')))
+    with pytest.raises(SystemExit):
+        module.parser().parse_args(['--config', str(config), option, '/unapproved-path'])
+
+
+def test_unconfigured_server_root_prints_but_cannot_run():
+    module = load_runner()
+    assert module.parser().parse_args(['--print-config']).data_root is None
+    with pytest.raises(SystemExit):
+        module.parser().parse_args([])
+
+
+@pytest.mark.parametrize('script_name,function_name', [
+    ('inspect_cleargrasp', 'inspect_dataset'), ('evaluate_cleargrasp', 'evaluate_saved'),
+    ('visualize_cleargrasp', 'visualize_saved')])
+def test_all_entrypoints_use_yaml_paths(tmp_path, monkeypatch, script_name, function_name):
+    load_runner()  # Add scripts/ to import path.
+    import importlib
+    module = importlib.import_module(script_name)
+    config = tmp_path/'shared.yaml'
+    root, out = tmp_path/'data', tmp_path/'results'
+    config.write_text(yaml.safe_dump(dict(data_root=str(root), output_dir=str(out),
+        checkpoint='checkpoints/local', offline=True, split='real-test', pair_draws=123)))
+    seen = []
+    def fake(*args, **kwargs):
+        seen.append((args, kwargs))
+        if script_name == 'inspect_cleargrasp':
+            return dict(data_root=str(root), splits={}, exr_capabilities={}, missing_files=[],
+                        unreadable_files=[], orphan_annotations=[])
+        return []
+    monkeypatch.setattr(module, function_name, fake)
+    monkeypatch.setattr(sys, 'argv', [script_name, '--config', str(config)])
+    assert module.main() == 0
+    if script_name == 'inspect_cleargrasp':
+        assert seen[0][0] == (root, out)
+    else:
+        assert seen[0][0] == (out,)
+        assert seen[0][1]['data_root'] == root
+
+
+def test_exr_reader_does_not_change_environment(tmp_path, monkeypatch):
+    monkeypatch.setitem(sys.modules, 'OpenEXR', None)
+    monkeypatch.setitem(sys.modules, 'cv2', types.SimpleNamespace(IMREAD_UNCHANGED=-1,
+        imread=lambda *args: np.ones((2, 3), np.float32)))
+    before = dict(os.environ)
+    data.read_depth(tmp_path/'depth.exr')
+    assert dict(os.environ) == before
