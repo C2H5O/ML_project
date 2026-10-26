@@ -1,16 +1,16 @@
 """Read-only TransCG inspection. No torch, checkpoint loading or inference."""
 import _bootstrap  # noqa: F401
-import argparse
 import json
 from pathlib import Path
 
 from PIL import Image
 import numpy as np
 from src.datasets.transcg import scan_rgb, read_annotations
+from src.transcg_config import TransCGArgumentParser
 
 
 def main():
-    p = argparse.ArgumentParser(description=__doc__)
+    p = TransCGArgumentParser(description=__doc__)
     p.add_argument("--data-root", type=Path, required=True)
     p.add_argument("--camera", type=int, choices=[1, 2], default=1)
     p.add_argument("--scene-start", type=int, default=1)

@@ -264,3 +264,59 @@ def test_canonical_wrapper_does_not_require_or_convert_intrinsics(monkeypatch):
     predictor.device, predictor.model = torch.device("cpu"), API()
     depth, info = predictor.predict_canonical(np.zeros((4, 6, 3), np.uint8))
     assert depth.shape == (2, 3) and "metric_conversion" not in info
+
+
+def test_yaml_config_pipeline_and_cli_overrides(tmp_path, runner):
+    import yaml
+    from src.transcg_config import PROJECT_ROOT
+    original = make_args(runner, tmp_path)
+    config_path = tmp_path / "run.yaml"
+    config = dict(data_root=str(original.data_root), checkpoint=str(original.checkpoint),
+        output_dir=str(original.output_dir), scene_end=1, num_samples=2, process_res=560,
+        precision="bf16", resume=False, intrinsics=None, intrinsics_shape=None)
+    config_path.write_text(yaml.safe_dump(config), encoding="utf-8")
+    args = runner.parser().parse_args(["--config", str(config_path)])
+    assert args.data_root == original.data_root and args.checkpoint == original.checkpoint
+    assert runner.run(args, SyntheticPredictor) == 0
+    assert runner.run(runner.parser().parse_args(["--config", str(config_path), "--resume"]), SyntheticPredictor) == 0
+    config.update(resume=True, num_samples=8, output_dir="results/config-test-only")
+    config_path.write_text(yaml.safe_dump(config), encoding="utf-8")
+    # Relative config paths are stable even outside the repository.
+    args = runner.parser().parse_args(["--config", str(config_path), "--num-samples", "3", "--no-resume"])
+    assert args.num_samples == 3 and not args.resume
+    assert args.output_dir == PROJECT_ROOT / "results/config-test-only"
+
+
+@pytest.mark.parametrize("text", [
+    "num_sampls: 20", "num_samples: 0", "num_samples: true", "resume: 'false'",
+    "camera: 3", "precision: bfloat16", "intrinsics_shape: [720]",
+    "intrinsics_shape: [720, -1]", "depth_max: .nan", "data_root: null",
+    "scene_start: 10\nscene_end: 1", "[not, a, mapping]", "data_root: [broken",
+])
+def test_invalid_yaml_fails_before_inference(tmp_path, runner, text):
+    path = tmp_path / "invalid.yaml"
+    path.write_text(text, encoding="utf-8")
+    with pytest.raises(SystemExit) as exc:
+        runner.parser().parse_args(["--config", str(path), "--data-root", str(tmp_path)])
+    assert exc.value.code == 2
+
+
+def test_shared_yaml_for_inspection_and_visualization(tmp_path):
+    from src.transcg_config import TransCGArgumentParser
+    path = tmp_path / "common.yaml"
+    path.write_text("data_root: ./data\ncheckpoint: ./checkpoints/DA3METRIC-LARGE\n"
+                    "num_samples: 20\noutput_dir: ./results/transcg_zero_shot\ndepth_max: 3.0\nresume: true\n")
+    p = TransCGArgumentParser()
+    p.add_argument("--output-dir", type=Path)
+    p.add_argument("--depth-max", type=float)
+    args = p.parse_args(["--config", str(path), "--depth-max", "4"])
+    assert args.output_dir.name == "transcg_zero_shot" and args.depth_max == 4
+
+
+def test_delivered_server_config(runner):
+    from src.transcg_config import PROJECT_ROOT
+    args = runner.parser().parse_args(["--config", str(PROJECT_ROOT / "configs/transcg_zero_shot.yaml")])
+    assert args.checkpoint.as_posix() == "/public/home/2024141520249/Documents/Projects/ML_pro/ML_project/checkpoints/DA3METRIC-LARGE"
+    assert args.data_root.as_posix() == "/public/home/2024141520249/Documents/Projects/ML_pro/data"
+    assert args.intrinsics is None and args.intrinsics_shape is None
+    assert args.num_samples == 20 and args.process_res == 560 and args.precision == "bf16"

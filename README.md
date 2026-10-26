@@ -231,7 +231,72 @@ query online HF revisions, or read Booster data. The DA3 source must remain at
 `3d835ec1a5802d64a8b8b15f817a1ab54809bfe4`. The existing GPU guard expects an
 RTX 4090D. The shared loader verifies the checkpoint architecture and hashes.
 
-On the Linux server, replace `/path/to/TransCG` with the real dataset location:
+The editable configuration is **`configs/transcg_zero_shot.yaml`**. It includes
+the supplied server checkpoint path and dataset base directory:
+
+```yaml
+data_root: /public/home/2024141520249/Documents/Projects/ML_pro/data
+checkpoint: /public/home/2024141520249/Documents/Projects/ML_pro/ML_project/checkpoints/DA3METRIC-LARGE
+output_dir: results/transcg_zero_shot
+num_samples: 20
+seed: 42
+process_res: 560
+device: cuda:0
+precision: bf16
+resume: false
+```
+
+Edit this file to change paths, scene range, camera, sample count, sampling mode,
+seed, resolution, device, precision, calibration and visualization colour limits.
+`data_root` must point to the extracted dataset through a supported layout; the
+server directory has not been inspected locally. If you extract the archive to
+`/public/home/2024141520249/Documents/Projects/ML_pro/data/transcg-data-1/transcg`,
+set `data_root` to that exact directory. The supplied base `data` path works if
+it directly contains scenes or `transcg/scene1`, for example. The config does
+not create/move datasets or download anything.
+
+All three TransCG Python commands accept the same configuration:
+
+```bash
+conda activate vggtomast3r
+cd /public/home/2024141520249/Documents/Projects/ML_pro/ML_project
+export HF_HUB_OFFLINE=1
+
+# Print effective options only: no dataset scanning, torch import or inference.
+python scripts/run_transcg_zero_shot.py --config configs/transcg_zero_shot.yaml --print-config
+
+python scripts/inspect_transcg.py --config configs/transcg_zero_shot.yaml
+python scripts/run_transcg_zero_shot.py --config configs/transcg_zero_shot.yaml
+
+# Resume with an explicit override, or set resume: true in YAML.
+python scripts/run_transcg_zero_shot.py --config configs/transcg_zero_shot.yaml --resume
+
+# CPU figure regeneration using output_dir and colour limits from the same file.
+python scripts/visualize_transcg.py --config configs/transcg_zero_shot.yaml
+```
+
+Precedence is **explicit CLI > YAML > built-in defaults**. For example:
+
+```bash
+python scripts/run_transcg_zero_shot.py --config configs/transcg_zero_shot.yaml \
+    --num-samples 40 --seed 123 --output-dir results/transcg_40_seed123 --no-resume
+```
+
+Changing sampling/inference/calibration requires a fresh output directory.
+`--no-resume` explicitly overrides YAML `resume: true`. YAML uses flat
+underscore keys (e.g. `process_res`), native booleans (`true`/`false`) and
+`intrinsics_shape: [HEIGHT, WIDTH]`. Keep both calibration fields `null` until
+verified. Unknown keys, malformed YAML and invalid types/values fail before
+inference. Relative **paths in YAML** are resolved against `ML_project/`, so
+moving the config or changing your working directory does not change their
+meaning. Explicit CLI paths retain their normal working-directory semantics.
+`--config` is opt-in; existing commands without it retain their defaults. YAML
+reading uses PyYAML from the existing OmegaConf/DA3 dependency stack; no packages
+are installed automatically. Inspect/render commands read only their applicable
+settings from the shared file. Booster `configs/zero_shot.yaml` is unchanged.
+
+Explicit CLI usage is also supported. Replace `/path/to/TransCG` below with the
+real dataset location:
 
 ```bash
 conda activate vggtomast3r

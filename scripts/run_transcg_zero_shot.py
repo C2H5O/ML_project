@@ -1,6 +1,7 @@
 """Independent, offline TransCG RGB-only DA3METRIC-LARGE inference."""
 import _bootstrap  # noqa: F401
 import argparse
+import json
 import os
 from pathlib import Path
 import random
@@ -14,10 +15,11 @@ from src.datasets.transcg import (scan_rgb, discover_root, sample_rgb, read_rgb,
 from src.inference.da3_zero_shot import DA3Predictor, resize_prediction
 from src.evaluation.metrics import MetricAccumulator
 from src.visualization.transcg import regenerate_figures
+from src.transcg_config import TransCGArgumentParser
 
 
 def parser():
-    p = argparse.ArgumentParser(description=__doc__)
+    p = TransCGArgumentParser(description=__doc__)
     p.add_argument("--data-root", type=Path, required=True)
     p.add_argument("--checkpoint", type=Path, default=Path("checkpoints/DA3METRIC-LARGE"))
     p.add_argument("--scene-start", type=int, default=1)
@@ -35,7 +37,8 @@ def parser():
                    help="Confirmed pixel grid of K, must match original RGB dimensions")
     p.add_argument("--depth-max", type=float, default=2.0, help="Shared GT/metric colour maximum in metres")
     p.add_argument("--error-max", type=float, default=1.0)
-    p.add_argument("--resume", action="store_true")
+    p.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
+    p.add_argument("--print-config", action="store_true", help="Print resolved arguments and exit without scanning data or loading a model")
     return p
 
 
@@ -213,4 +216,8 @@ def run(args, predictor_factory=DA3Predictor):
 
 
 if __name__ == "__main__":
-    raise SystemExit(run(parser().parse_args()))
+    args = parser().parse_args()
+    if args.print_config:
+        print(json.dumps(vars(args), indent=2, default=str))
+    else:
+        raise SystemExit(run(args))

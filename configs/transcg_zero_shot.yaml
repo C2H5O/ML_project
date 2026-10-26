@@ -1,0 +1,39 @@
+# TransCG zero-shot configuration. Edit this file, then run:
+# python scripts/run_transcg_zero_shot.py --config configs/transcg_zero_shot.yaml
+# Explicit command-line options override this file.
+# Relative paths below are relative to ML_project/, not to configs/ or your CWD.
+
+# Server paths. data_root must contain the extracted scene directories through
+# one supported layout (scene1/, data/scene1/, transcg/scene1/, transcg/data/scene1/).
+# If extracted under data/transcg-data-1/transcg/, change data_root to that path.
+data_root: /public/home/2024141520249/Documents/Projects/ML_pro/data
+checkpoint: /public/home/2024141520249/Documents/Projects/ML_pro/ML_project/checkpoints/DA3METRIC-LARGE
+output_dir: results/transcg_zero_shot
+
+# Candidate pool and sampling. camera: 1 = D435 RGB1, 2 = L515 RGB2.
+scene_start: 1
+scene_end: 10
+camera: 1
+num_samples: 20
+seed: 42
+sampling: global             # global | per_scene (20 over 10 scenes = 2 each)
+
+# Single-image DA3 inference; local checkpoint only, no training or downloads.
+process_res: 560
+device: cuda:0
+precision: bf16              # bf16 | auto | fp16 | fp32
+resume: false               # true resumes the same saved manifest/config
+
+# Keep null unless genuine matching camera calibration and its RGB grid are verified.
+# Missing calibration still permits canonical-depth inference, without metric scores.
+# Example after verification:
+# intrinsics: /path/to/transcg/camera_intrinsics/1-camIntrinsics-D435.npy
+# intrinsics_shape: [720, 1280]   # HEIGHT, WIDTH of the ORIGINAL RGB/K grid
+intrinsics: null
+intrinsics_shape: null
+
+# Visualization only. Metric GT/pred share [0, depth_max] metres;
+# absolute error uses [0, error_max] metres. Arrays are never clipped.
+# Canonical predictions use separately labelled per-image P2/P98 limits.
+depth_max: 2.0
+error_max: 1.0
