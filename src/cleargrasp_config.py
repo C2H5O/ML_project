@@ -17,6 +17,9 @@ PATH_FIELDS = {'data_root', 'checkpoint', 'output_dir'}
 BOOL_FIELDS = {'all', 'skip_evaluation', 'skip_visualization', 'offline'}
 INT_FIELDS = {'max_samples', 'seed', 'process_res', 'pair_draws', 'ring_radius', 'boundary_margin'}
 FLOAT_FIELDS = {'gt_gap_m', 'compression_ratio', 'depth_max', 'error_max'}
+INT_FIELDS |= {'analysis_expected_samples', 'analysis_min_pairs', 'analysis_min_unique_pixels',
+               'analysis_boundary_width', 'analysis_min_region_pixels'}
+FLOAT_FIELDS |= {'analysis_baseline_rtol', 'analysis_baseline_atol'}
 FIELDS = PATH_FIELDS | BOOL_FIELDS | INT_FIELDS | FLOAT_FIELDS | {'split', 'device', 'precision', 'model_id'}
 
 
@@ -53,6 +56,12 @@ def load_config(path):
     for key in ('max_samples', 'process_res', 'pair_draws', 'ring_radius'):
         if key in config and config[key] < 1:
             raise ValueError(f'{key} must be positive')
+    for key in INT_FIELDS:
+        if key.startswith('analysis_') and key in config and config[key] < 1:
+            raise ValueError(f'{key} must be positive')
+    for key in ('analysis_baseline_rtol', 'analysis_baseline_atol'):
+        if key in config and config[key] < 0:
+            raise ValueError(f'{key} must be nonnegative')
     if config.get('boundary_margin', 2) < 0:
         raise ValueError('boundary_margin must be nonnegative')
     if config.get('boundary_margin', 2) >= config.get('ring_radius', 30):

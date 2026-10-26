@@ -1,10 +1,11 @@
 """Offline RGB-only single-image inference. Run only on the intended server."""
 from pathlib import Path
 import _bootstrap
-from src.common import (read_json, write_json, write_npy, digest_file, sample_output,
+from src.common import (read_json, write_json, write_npy, digest_file,
                         protect_dataset, positive_int)
 from src.datasets.cleargrasp import (SPLITS, discover, select_samples, calibration,
                                      read_rgb, path_for, annotations)
+from src.datasets.cleargrasp_paths import resolve_prediction_dir
 from src.inference.da3_zero_shot import DA3Predictor, metric_depth_from_canonical, DA3_COMMIT
 from src.evaluation.cleargrasp import saved_prediction, evaluate_saved
 from src.visualization.cleargrasp import visualize_saved
@@ -101,7 +102,7 @@ def run(args):
     records, failures, predictor = [], [], None
     print('[2/4] DA3 independent RGB inference (or verified resume)', flush=True)
     for s in selected:
-        folder = sample_output(output, s['split'], s['sample_id'])
+        folder = resolve_prediction_dir(output, s, allow_missing=True)
         try:
             if (folder / 'prediction.json').exists():
                 _, _, meta = saved_prediction(output, s)

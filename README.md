@@ -480,3 +480,56 @@ Actual checkpoint loading at the pinned DA3 commit, BF16 on RTX 4090D, native
 output dimensions/focal conversion, GPU memory/time, server path permissions,
 real annotation alignment and resulting transparent-object quality still need
 verification on the server. Development did not execute real TransCG inference.
+
+## ClearGrasp: analyze the existing 20 predictions on CPU
+
+The saved `sample_manifest.json` is authoritative. The analysis reads all 20
+existing `metric_depth.npy` arrays, verifies identity, SHA-256, metre units and
+recorded/current camera calibration, and writes only `geometry_analysis/` inside
+the configured output directory. It does not run DA3, download weights, choose
+new samples or overwrite existing predictions/metrics/comparison figures.
+
+Keep your server's existing `data_root`, `checkpoint` and `output_dir` in
+`configs/cleargrasp_zero_shot.yaml`. All paths remain in YAML; no temporary
+environment variables or CLI data/output path overrides are used. Run from the
+existing environment and checkout:
+
+```bash
+conda activate vggtomast3r
+cd ~/Documents/Projects/ML_pro/ML_project
+
+# Optional: preview and validate every saved sample without writing anything.
+python scripts/migrate_cleargrasp_result_paths.py \
+    --config configs/cleargrasp_zero_shot.yaml \
+    --dry-run
+
+# After reviewing the mapping: move prediction and figure directories safely.
+python scripts/migrate_cleargrasp_result_paths.py \
+    --config configs/cleargrasp_zero_shot.yaml \
+    --apply
+
+# Required analysis step: saved arrays + GT/masks only, no GPU inference.
+python scripts/analyze_cleargrasp_geometry.py \
+    --config configs/cleargrasp_zero_shot.yaml
+```
+
+Migration is optional: the analyzer supports both legacy 24-character hashes and
+new `predictions/real-test/d415/000000029/` paths. Figures use the same readable
+identity below `figures/`. Shared Booster/TransCG path conventions are unchanged.
+Do not run migration concurrently with inference, visualization or analysis.
+
+Read `<configured output_dir>/geometry_analysis/report.md` for the generated
+course-report text, six summary charts, hardest sample IDs and nine-panel
+per-image figures. CSV/JSON outputs distinguish unaligned, globally pixel-weighted
+Raw Metric scores from **GT-Dependent Diagnostic Only** scale/background-aligned
+results. Local ordinal, log-gap compression/reversal and boundary contrasts are
+scale invariant; insufficient unique pairs/pixels produce `unavailable`.
+The old `metrics/raw_metric_summary.json` is compared, never overwritten. A
+baseline mismatch or input validation failure returns exit code 2 and records
+the issue. Real server scores are generated only when this command runs against
+your saved predictions; synthetic test results are not dataset performance.
+
+See [the geometry analysis guide](docs/CLEARGRASP_GEOMETRY_ANALYSIS.md) for
+protocol definitions, optional YAML settings, migration recovery and output
+details. The existing [ClearGrasp guide](docs/CLEARGRASP_ZERO_SHOT_GUIDE.md)
+covers the original inference workflow; rerunning inference is not needed here.

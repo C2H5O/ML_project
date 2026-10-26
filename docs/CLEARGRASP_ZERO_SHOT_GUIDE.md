@@ -332,7 +332,7 @@ limits may saturate values above `depth_max`; per-sample `visualization.json`
 records this count and the display protocol.
 
 Each calibrated sample additionally exports two borderless images under its
-`figures/<split>/<sample-hash>/` directory:
+`figures/<split>/<camera-or-group>/<sample-number>/` directory (old hash directories can be migrated):
 
 - `predicted_depth.png`: complete prediction at the saved native network grid,
   with no GT mask and no spatial resize. Uses the existing TransCG colouring
@@ -396,7 +396,7 @@ data/checkpoints or importing Torch, including an unresolved `data_root: null`.
 ## Output and remaining validation
 
 Outputs include inspection JSON, selected manifest, run metadata, inference summary
-and failures; `predictions/<split>/<stable-ID-hash>/` contains original canonical
+and failures; `predictions/<split>/<camera-or-group>/<sample-number>/` contains original canonical
 NPY, optional metric NPY, prediction metadata. Hash-based paths are collision
 resistant; the original sample ID is stored in both manifest and prediction JSON.
 

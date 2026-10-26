@@ -2,13 +2,14 @@
 from pathlib import Path
 import numpy as np
 from PIL import Image
-from src.common import read_json, write_json, sample_output, protect_dataset
+from src.common import read_json, write_json, protect_dataset
 from src.datasets.cleargrasp import annotations, read_rgb, path_for
 from src.evaluation.cleargrasp import saved_prediction
 from src.evaluation.relative_geometry import oracle_scale
 from src.evaluation.metrics import valid_pixels
 from src.inference.da3_zero_shot import resize_prediction
 from src.visualization.transcg import colour_depth
+from src.datasets.cleargrasp_paths import cleargrasp_figure_dir, load_result_manifest
 
 
 def depth_display_arrays(gt, pred):
@@ -31,8 +32,7 @@ def render_sample(output, sample, rgb, gt, mask, pred, metric, depth_max=2., err
     import matplotlib.pyplot as plt
     if depth_max <= 0 or error_max <= 0:
         raise ValueError('Colourbar limits must be positive')
-    folder = sample_output(output, sample['split'], sample['sample_id'])
-    target = Path(output) / 'figures' / sample['split'] / folder.name
+    target = cleargrasp_figure_dir(output, sample)
     target.mkdir(parents=True, exist_ok=True)
     display = depth_display_arrays(gt, pred)
     overlay = rgb.astype(float).copy()
@@ -91,7 +91,7 @@ def render_sample(output, sample, rgb, gt, mask, pred, metric, depth_max=2., err
 
 def visualize_saved(output, data_root=None, depth_max=2., error_max=0.5):
     output = Path(output)
-    manifest = read_json(output / 'sample_manifest.json')
+    manifest = load_result_manifest(output)
     root = data_root or manifest['data_root']
     protect_dataset(root, output)
     thumbnails, failures = [], []
