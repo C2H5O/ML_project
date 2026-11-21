@@ -533,3 +533,35 @@ See [the geometry analysis guide](docs/CLEARGRASP_GEOMETRY_ANALYSIS.md) for
 protocol definitions, optional YAML settings, migration recovery and output
 details. The existing [ClearGrasp guide](docs/CLEARGRASP_ZERO_SHOT_GUIDE.md)
 covers the original inference workflow; rerunning inference is not needed here.
+
+## Mirage-18k zero-shot qualitative run
+
+Use the existing DA3 environment and a local `DA3METRIC-LARGE` checkpoint. The
+[Mirage-18k release](https://huggingface.co/datasets/rtarun1/mirage18k) stores
+timestamped RGB PNGs under `<data-root>/<scene>/rs_images/`. The runner uniformly
+selects up to 16 filename-sorted frames from one scene. Partial downloads work
+without split lists. Same-name `binary_masks/` and `rs_corresponding_gt/` files are
+optional. [The official loader](https://github.com/rtarun1/Silica/blob/master/src/silica_core/utils/dataloader.py)
+converts GT PNG values from millimetres to metres.
+
+Run from the repository root in PowerShell. On Linux, substitute the dataset and
+checkpoint paths for the server paths.
+
+```powershell
+python scripts/run_mirage_zero_shot.py --data-root 'E:\datasets\Mirage18k' --scene 2026-02-01_11-14-35 --checkpoint checkpoints/DA3METRIC-LARGE --max-samples 16 --device cuda:0 --output-dir results/mirage_zero_shot
+```
+
+Each frame's folder contains the original RGB, native float32 prediction in
+`prediction_canonical.npy`, a viridis depth image and `comparison.png`. Open
+`results/mirage_zero_shot/overview.png` for the RGB/prediction grid. Per-image
+percentile limits affect the colors only. Use `--max-samples 1` and a separate
+output directory for a smoke test. The output directory must be new or empty.
+
+The default scene has no published RGB calibration in the checked layout, so
+its predictions use canonical units. If calibrated intrinsics for the scene's
+original RGB grid are available, pass `--intrinsics` with a JSON object containing
+`K` (3×3 matrix in pixels), `width`, and `height`. This enables an additional
+`prediction_metres.npy`. Aligned metric GT and metric predictions use a shared
+color range and produce an absolute error image and per-frame AbsRel, RMSE (m),
+and delta1 in `metrics.csv`. Inference uses RGB only and applies no GT scale or
+shift fitting.
