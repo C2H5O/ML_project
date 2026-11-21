@@ -108,8 +108,12 @@ class DA3Predictor:
         self.precision = precision_for_device(torch, self.device, precision)
         package_dir = Path(next(iter(depth_anything_3.__path__))).resolve()
         try:
-            code_commit = subprocess.check_output(["git", "-C", str(package_dir), "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL).strip()
-            changed = subprocess.check_output(["git", "-C", str(package_dir), "diff", "HEAD", "--name-only"], text=True).splitlines()
+            code_commit = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], cwd=package_dir, text=True, stderr=subprocess.DEVNULL
+            ).strip()
+            changed = subprocess.check_output(
+                ["git", "diff", "HEAD", "--name-only"], cwd=package_dir, text=True
+            ).splitlines()
         except (OSError, subprocess.CalledProcessError) as exc:
             raise RuntimeError("Cannot establish official DA3 source provenance; no weights were loaded") from exc
         if code_commit != DA3_COMMIT:

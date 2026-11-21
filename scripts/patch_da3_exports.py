@@ -42,14 +42,14 @@ def main():
     p.add_argument("source", type=Path)
     p.add_argument("--verify", action="store_true")
     args = p.parse_args()
-    head = subprocess.check_output(["git", "-C", str(args.source), "rev-parse", "HEAD"], text=True).strip()
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=args.source, text=True).strip()
     if head != COMMIT:
         raise ValueError(f"DA3 commit must be {COMMIT}; got {head}")
-    original = subprocess.check_output(["git", "-C", str(args.source), "show", f"{COMMIT}:{TARGET}"], text=True)
+    original = subprocess.check_output(["git", "show", f"{COMMIT}:{TARGET}"], cwd=args.source, text=True)
     expected = patched(original)
     path = args.source / TARGET
     current = path.read_text(encoding="utf-8")
-    changed = subprocess.check_output(["git", "-C", str(args.source), "diff", "--name-only"], text=True).splitlines()
+    changed = subprocess.check_output(["git", "diff", "HEAD", "--name-only"], cwd=args.source, text=True).splitlines()
     if any(name != TARGET for name in changed):
         raise ValueError("Unrelated source modifications in DA3 checkout")
     if args.verify:
