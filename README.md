@@ -565,3 +565,18 @@ original RGB grid are available, pass `--intrinsics` with a JSON object containi
 color range and produce an absolute error image and per-frame AbsRel, RMSE (m),
 and delta1 in `metrics.csv`. Inference uses RGB only and applies no GT scale or
 shift fitting.
+
+## GlassRecon zero-shot evaluation
+
+Use the extracted [GlassRecon release](https://github.com/jarvisyjw/GlassRecon). The archive has 917 RGB JPEGs under `images/`. Match each filename stem to `intrinsics/*.json`, `masks/*.png`, `sensor_depths/*.png`, and `evaluation_depths/depths_npy/*.npy`. The evaluation GT is a `1024 × 1280` uint16 array with zero indicating missing depth. Following the scale convention in the [official evaluator](https://github.com/JMamie/GlassRecon/blob/main/eval.py), multiply the evaluation array by the JSON's `depth_scale` of `0.00025` m/unit. This scale also agrees with the metre depths in the released point clouds. The glass mask uses 255 for glass and 0 for background.
+
+The paper, public repos and downloaded archive provide no GlassRecon train/validation/test manifest. The fixed [split manifest](configs/glassrecon_splits.json) uses seed 42 and assigns entire Matterport3D buildings. All 587 panorama IDs in the RGB filenames matched one of 26 buildings in the [pinned Matterport3D connectivity data](https://github.com/peteanderson80/Matterport3DSimulator/tree/589d091b111333f9e9f9d6cfd021b2eb68435925/connectivity). The resulting split has 642 train, 137 validation and 138 test images from 11, 8 and 7 buildings, respectively. Train and validation are reserved for future work. GlassRecon reuses RGBs originating from Matterport3D / RGB-D GSD, so this split cannot establish whether DA3 saw the original images during pretraining. [GlassRecon paper](https://arxiv.org/html/2604.18336v3#S3.SS1)
+
+```bash
+python scripts/run_glassrecon_zero_shot.py --data-root /path/to/GlassRecon --inspect-only
+python scripts/run_glassrecon_zero_shot.py --data-root /path/to/GlassRecon --checkpoint /path/to/DA3METRIC-LARGE --split test --device cuda:0 --precision bf16 --output-dir results/glassrecon_zero_shot
+```
+
+Use the existing DA3 environment and local Hugging Face checkpoint directory containing `config.json` and `model.safetensors`. Add `--max-samples 16` or `--max-samples 20` and use a fresh output directory for a quick run. Inspection runs on CPU and verifies the full release, including the stored difficulty labels. Whole-image sensor-vs-GT AbsRel over finite depths greater than `1e-6` m in both maps reproduces the paper's Easy (≤ 0.03) and Hard (> 0.03) counts of 601 and 316. The frozen model receives one RGB image at a time at process resolution 560. The shared DA3 wrapper multiplies the canonical output once by `mean(fx_native, fy_native) / 300`, with the supplied pixel intrinsics scaled to the DA3 output grid. Evaluation uses this raw metric prediction. The paper's sensor-aligned protocol fits scale and shift against raw sensor depth. [GlassRecon evaluation protocol](https://arxiv.org/html/2604.18336v3#S5.SS1)
+
+The runner saves native `canonical.npy` and GT-grid `metric_m.npy` predictions under `predictions/<sample_id>/`, plus per-image five-panel PNGs and a 16-image Easy/Hard overview under `figures/` for a full run. The per-image CSV and summary CSV/JSON report AbsRel, RMSE in metres and δ1 (< 1.25) on the full image, glass and non-glass. A pixel contributes only when both GT and prediction are finite and positive. Each regional summary averages available per-image metrics and reports GT coverage and jointly valid coverage against the total pixels in the region.
